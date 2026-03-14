@@ -104,6 +104,19 @@
   box-shadow: 0 0 0 0.25rem rgba(33, 136, 61, 0.25);
 }
 
+/* Input group + form-floating na busca do acervo */
+.input-group-acervo-busca .form-floating .form-control {
+  border-left: 0;
+}
+.input-group-acervo-busca:focus-within .input-group-text {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 0.25rem rgba(33, 136, 61, 0.25);
+}
+.input-group-acervo-busca:focus-within .form-control {
+  border-color: var(--cor-primaria);
+  box-shadow: none;
+}
+
 #acervo-alert-container .alert-success {
   background-color: rgba(33, 136, 61, 0.12);
   border-color: var(--cor-primaria);
@@ -114,16 +127,38 @@
   color: var(--cor-primaria);
 }
 
+/* Grade do acervo: mantém row do Bootstrap e altura mínima para evitar salto ao filtrar */
 #acervo-cards {
-  min-height: 220px;
+  min-height: 320px;
+  width: 100%;
+}
+#acervo-cards.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+/* Colunas da grade (cards): preservar larguras do grid Bootstrap */
+#acervo-cards > [class*="col-"] {
+  max-width: none;
+}
+#acervo-cards .acervo-loading {
+  min-height: 320px;
 }
 #acervo-cards.acervo-vazio .acervo-nenhum-resultado {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 220px;
+  min-height: 320px;
   color: var(--cor-texto);
   font-size: 1rem;
+}
+
+#acervo-paginacao {
+  min-height: 2.5rem;
+}
+
+/* Toast de sucesso no tema verde */
+#toast-container .toast.text-bg-success {
+  background-color: var(--cor-primaria) !important;
 }
 
 body {

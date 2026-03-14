@@ -167,23 +167,36 @@
           <div class="card-body">
             <!-- Alert de sucesso (exibido ao adicionar/editar/excluir HQ) -->
             <div id="acervo-alert-container" class="mb-3" aria-live="polite"></div>
-            <!-- Filtros + botão Adicionar (desktop: botão na mesma linha; mobile: botão fica na linha de baixo) -->
+            <!-- Filtros + botão Adicionar (Input Group na busca, Float Labels em busca/roteirista/desenhista; ano sem float por limitação do Bootstrap) -->
             <div class="row g-2 align-items-end mb-3">
               <div class="col-12 col-md-3">
-                <label for="acervo-busca" class="form-label">Busca</label>
-                <input type="text" id="acervo-busca" class="form-control" placeholder="Nome ou descrição..." aria-label="Buscar por nome ou descrição">
+                <div class="input-group input-group-acervo-busca">
+                  <span class="input-group-text" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                  </span>
+                  <div class="form-floating flex-grow-1">
+                    <input type="text" id="acervo-busca" class="form-control" placeholder="Nome ou descrição..." aria-label="Busca inteligente por nome ou descrição">
+                    <label for="acervo-busca">Busca inteligente</label>
+                  </div>
+                </div>
               </div>
               <div class="col-6 col-md-2">
-                <label for="acervo-roteirista" class="form-label">Roteirista</label>
-                <select id="acervo-roteirista" class="form-select" aria-label="Filtrar por roteirista">
-                  <option value="">Todos</option>
-                </select>
+                <div class="form-floating">
+                  <select id="acervo-roteirista" class="form-select" aria-label="Filtrar por roteirista">
+                    <option value="">Todos</option>
+                  </select>
+                  <label for="acervo-roteirista">Roteirista</label>
+                </div>
               </div>
               <div class="col-6 col-md-2">
-                <label for="acervo-desenhista" class="form-label">Desenhista</label>
-                <select id="acervo-desenhista" class="form-select" aria-label="Filtrar por desenhista">
-                  <option value="">Todos</option>
-                </select>
+                <div class="form-floating">
+                  <select id="acervo-desenhista" class="form-select" aria-label="Filtrar por desenhista">
+                    <option value="">Todos</option>
+                  </select>
+                  <label for="acervo-desenhista">Desenhista</label>
+                </div>
               </div>
               <div class="col-12 col-md-2">
                 <label for="acervo-ano" class="form-label">Ano (mín.) <span id="acervo-ano-valor" class="text-muted">—</span></label>
@@ -296,6 +309,9 @@
       </div>
     </div>
   </div>
+
+  <!-- Container de Toasts (notificações ao salvar/deletar), canto inferior direito -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toast-container" aria-live="polite" aria-atomic="true"></div>
 
   <!-- Scripts Bootstrap e main.js -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

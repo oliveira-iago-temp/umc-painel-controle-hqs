@@ -1,4 +1,10 @@
-// Banco em memória
+/**
+ * Central de Quadrinhos – main.js
+ * Lógica do painel: banco em memória, painel inicial, acervo (filtros, busca, paginação), modal HQ e inicialização.
+ */
+
+// ========== BANCO EM MEMÓRIA ==========
+
 const db = {
   hqs: [],
   _nextId: 1,
@@ -40,7 +46,7 @@ const db = {
   }
 };
 
-// Dados das HQs default (últimas 4 na ordem: id 6=Wonder Woman, 7=Amazing Fantasy, 8=Captain America, 9=Spider-Man #316)
+// Dados iniciais (seed). Ordem de inclusão: primeiros 5, depois id 6–9 = Wonder Woman, Amazing Fantasy, Captain America, Spider-Man #316.
 const hqsIniciais = [
   {
     titulo: 'Fantastic Four #1',
@@ -117,7 +123,9 @@ const hqsIniciais = [
   }
 ];
 
-// Converte arquivo em base64 para salvar no banco
+// ========== UTILITÁRIOS: IMAGENS E INICIALIZAÇÃO DO BANCO ==========
+
+/** Converte File em data URL (base64) para persistir a capa no banco. */
 function arquivoParaBase64(arquivo) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -127,7 +135,7 @@ function arquivoParaBase64(arquivo) {
   });
 }
 
-// Converte URL da imagem em base64 (data URL)
+/** Converte URL da imagem (ex.: seed) em data URL. */
 function urlParaBase64(url) {
   return fetch(url)
     .then(res => res.blob())
@@ -141,7 +149,7 @@ function urlParaBase64(url) {
     });
 }
 
-// Preenche o banco com as 3 HQs iniciais; só roda se o banco estiver vazio
+/** Preenche o banco com hqsIniciais; só executa se o banco estiver vazio. */
 async function initHqsIniciais() {
   if (db.getAllHqs().length > 0) return;
   for (const hq of hqsIniciais) {
@@ -157,13 +165,15 @@ async function initHqsIniciais() {
   }
 }
 
-// Retorna as últimas N HQs (por id/ordem de inclusão; até 6 para o painel)
+// ========== PAINEL INÍCIO (últimas HQs, tops, collapse Ver mais) ==========
+
+/** Retorna as últimas N HQs (ordem de inclusão; usado no bloco "Últimas HQs cadastradas"). */
 function getUltimasHqs(n) {
   var todas = db.getAllHqs();
   return todas.slice(0, n || 6);
 }
 
-// Retorna top 3 roteiristas (mais HQs)
+/** Retorna os 3 roteiristas com mais HQs cadastradas. */
 function getTop3Roteiristas() {
   var todas = db.getAllHqs();
   var contagem = {};
@@ -177,7 +187,7 @@ function getTop3Roteiristas() {
     .map(function (e) { return e[0]; });
 }
 
-// Retorna top 3 desenhistas (mais HQs)
+/** Retorna os 3 desenhistas com mais HQs cadastradas. */
 function getTop3Desenhistas() {
   var todas = db.getAllHqs();
   var contagem = {};
@@ -191,7 +201,7 @@ function getTop3Desenhistas() {
     .map(function (e) { return e[0]; });
 }
 
-// Atualiza todos os blocos do painel inicial
+/** Atualiza listas do painel inicial: últimas HQs (3 + collapse com mais 3), top roteiristas e top desenhistas. */
 function atualizaPainelInicial() {
   var elUltimas = document.getElementById('lista-ultimas-hqs');
   var elUltimasMais = document.getElementById('lista-ultimas-hqs-mais');
@@ -244,6 +254,7 @@ function atualizaPainelInicial() {
   }
 }
 
+/** Escapa HTML para exibição segura em texto. */
 function escapeHtml(texto) {
   if (!texto) return '';
   var div = document.createElement('div');
@@ -251,9 +262,9 @@ function escapeHtml(texto) {
   return div.innerHTML;
 }
 
-// --- Acervo: filtros, grade e paginação (10 por página) ---
+// ========== ACERVO: FILTROS, BUSCA INTELIGENTE, GRADE E PAGINAÇÃO ==========
 
-var ACERVO_POR_PAGINA = 4;
+var ACERVO_POR_PAGINA = 6;
 var ACERVO_ANO_FALLBACK = 1930;
 var acervoEstado = {
   paginaAtual: 1,
@@ -288,13 +299,16 @@ function syncRangeAnoBounds() {
   }
   if (anoValorSpan) anoValorSpan.textContent = anoEl.value;
 }
+
 var modalHqIdAtual = null;
 var IMAGEM_SEM_CAPA = 'assets/images/hqs/sem-capa.jpg';
 
+/** Escapa caracteres especiais para uso em RegExp (busca segura). */
 function escapeRegex(s) {
   return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+/** Lista única de roteiristas do banco (para o select do filtro). */
 function getOpcoesRoteiristas() {
   var hqs = db.getAllHqs();
   var set = new Set();
@@ -305,6 +319,7 @@ function getOpcoesRoteiristas() {
   return Array.from(set).sort();
 }
 
+/** Lista única de desenhistas do banco (para o select do filtro). */
 function getOpcoesDesenhistas() {
   var hqs = db.getAllHqs();
   var set = new Set();
@@ -315,6 +330,10 @@ function getOpcoesDesenhistas() {
   return Array.from(set).sort();
 }
 
+/** Campos de texto da HQ em que a busca inteligente procura (todos os campos textuais do banco). */
+var CAMPOS_BUSCA_HQ = ['titulo', 'descricao', 'roteirista', 'desenhista'];
+
+/** Aplica filtros (busca em todos os campos de texto, roteirista, desenhista, ano mín.) e retorna a lista filtrada. */
 function filtrarHqs(filtros) {
   var lista = db.getAllHqs();
 
@@ -322,7 +341,10 @@ function filtrarHqs(filtros) {
   if (busca) {
     var regex = new RegExp(escapeRegex(busca), 'i');
     lista = lista.filter(function (hq) {
-      return regex.test(hq.titulo || '') || regex.test(hq.descricao || '');
+      return CAMPOS_BUSCA_HQ.some(function (campo) {
+        var valor = hq[campo];
+        return valor != null && regex.test(String(valor).trim());
+      });
     });
   }
 
@@ -341,6 +363,7 @@ function filtrarHqs(filtros) {
   return lista;
 }
 
+/** Divide a lista em páginas; retorna { itens, totalPaginas, paginaAtual, total }. */
 function paginar(lista, pagina, porPagina) {
   var total = lista.length;
   var totalPaginas = Math.max(1, Math.ceil(total / porPagina));
@@ -350,6 +373,7 @@ function paginar(lista, pagina, porPagina) {
   return { itens: itens, totalPaginas: totalPaginas, paginaAtual: pagAtual, total: total };
 }
 
+/** Preenche os selects de roteirista e desenhista com opções vindas do banco. */
 function renderizarFiltrosAcervo() {
   var selR = document.getElementById('acervo-roteirista');
   var selD = document.getElementById('acervo-desenhista');
@@ -377,9 +401,21 @@ function renderizarFiltrosAcervo() {
   });
 }
 
+/** Remove instâncias de Popover dos cards antes de limpar a grade (evita vazamento ao re-renderizar). */
+function disposePopoversAcervo() {
+  var container = document.getElementById('acervo-cards');
+  if (!container || !window.bootstrap || !window.bootstrap.Popover) return;
+  container.querySelectorAll('.cartao-hq').forEach(function (el) {
+    var inst = bootstrap.Popover.getInstance(el);
+    if (inst) inst.dispose();
+  });
+}
+
+/** Renderiza os cards das HQs na grade #acervo-cards (ou mensagem de vazio). Popover ao passar o mouse no card. */
 function renderizarCardsAcervo(hqs) {
   var container = document.getElementById('acervo-cards');
   if (!container) return;
+  disposePopoversAcervo();
   container.innerHTML = '';
   container.classList.remove('acervo-vazio');
 
@@ -419,9 +455,25 @@ function renderizarCardsAcervo(hqs) {
 
     col.appendChild(card);
     container.appendChild(col);
+
+    /* Popover ao passar o mouse no card: título + descrição da HQ */
+    if (window.bootstrap && window.bootstrap.Popover) {
+      var descricao = (hq.descricao || '').trim();
+      if (descricao.length > 200) descricao = descricao.substring(0, 200) + '…';
+      var conteudoPopover = descricao ? escapeHtml(descricao) : 'Sem descrição.';
+      conteudoPopover += '<br><small class="text-muted">Clique em Detalhes para ver ou editar.</small>';
+      new bootstrap.Popover(card, {
+        trigger: 'hover',
+        title: escapeHtml(hq.titulo),
+        content: conteudoPopover,
+        html: true,
+        container: 'body'
+      });
+    }
   });
 }
 
+/** Renderiza os links de paginação em #acervo-paginacao. */
 function renderizarPaginacaoAcervo(totalPaginas, paginaAtual) {
   var nav = document.getElementById('acervo-paginacao');
   if (!nav) return;
@@ -459,14 +511,13 @@ function renderizarPaginacaoAcervo(totalPaginas, paginaAtual) {
 
 var ACERVO_LOADING_MS = 500;
 
+/** Exibe spinner de carregamento na área de cards (simulação). */
 function mostrarLoadingAcervo() {
   var container = document.getElementById('acervo-cards');
-  var nav = document.getElementById('acervo-paginacao');
   if (container) {
-    container.innerHTML = '<div class="col-12 d-flex flex-column align-items-center justify-content-center py-5 acervo-loading"><div class="spinner-border" role="status" style="width: 3rem; height: 3rem;"><span class="visually-hidden">Carregando...</span></div><p class="mt-2 mb-0 text-muted">Carregando...</p></div>';
+    container.innerHTML = '<div class="col-12 d-flex flex-column align-items-center justify-content-center acervo-loading"><div class="spinner-border" role="status" style="width: 3rem; height: 3rem;"><span class="visually-hidden">Carregando...</span></div><p class="mt-2 mb-0 text-muted">Carregando...</p></div>';
     container.classList.remove('acervo-vazio');
   }
-  if (nav) nav.innerHTML = '';
 }
 
 function atualizarAcervo() {
@@ -487,6 +538,7 @@ function atualizarAcervo() {
   }, ACERVO_LOADING_MS);
 }
 
+/** Inicializa estado dos filtros e primeira renderização do acervo. */
 function initAcervo() {
   renderizarFiltrosAcervo();
   syncRangeAnoBounds();
@@ -499,6 +551,7 @@ function initAcervo() {
   atualizarAcervo();
 }
 
+/** Liga eventos dos filtros, range (com debounce), e clique em "Detalhes" nos cards. */
 function bindAcervoEventos() {
   var busca = document.getElementById('acervo-busca');
   var selR = document.getElementById('acervo-roteirista');
@@ -520,8 +573,21 @@ function bindAcervoEventos() {
   if (selR) selR.addEventListener('change', aplicarFiltros);
   if (selD) selD.addEventListener('change', aplicarFiltros);
   if (anoRange) {
-    anoRange.addEventListener('input', aplicarFiltros);
-    anoRange.addEventListener('change', aplicarFiltros);
+    var timeoutAnoRange;
+    function aplicarFiltrosAnoDebounced() {
+      if (anoValor && anoRange) anoValor.textContent = anoRange.value;
+      aplicarFiltros();
+    }
+    anoRange.addEventListener('input', function () {
+      if (anoValor && anoRange) anoValor.textContent = anoRange.value;
+      clearTimeout(timeoutAnoRange);
+      timeoutAnoRange = setTimeout(aplicarFiltrosAnoDebounced, 300);
+    });
+    anoRange.addEventListener('change', function () {
+      if (anoValor && anoRange) anoValor.textContent = anoRange.value;
+      clearTimeout(timeoutAnoRange);
+      timeoutAnoRange = setTimeout(aplicarFiltrosAnoDebounced, 300);
+    });
   }
 
   var containerCards = document.getElementById('acervo-cards');
@@ -535,8 +601,9 @@ function bindAcervoEventos() {
   }
 }
 
-// --- Modal detalhes/edição HQ ---
+// ========== MODAL HQ (detalhes, edição, adicionar, excluir) ==========
 
+/** Referências aos elementos do formulário do modal HQ. */
 function getFormModalCampos() {
   return {
     titulo: document.getElementById('modal-hq-titulo'),
@@ -550,6 +617,7 @@ function getFormModalCampos() {
   };
 }
 
+/** Preenche os campos do modal com os dados da HQ (ou limpa se hq for null). */
 function preencherFormModal(hq) {
   var c = getFormModalCampos();
   var semCapa = IMAGEM_SEM_CAPA;
@@ -579,6 +647,7 @@ function preencherFormModal(hq) {
   if (c.imagemFile) c.imagemFile.value = '';
 }
 
+/** Alterna o modal entre modo leitura (detalhes) e modo edição/adicionar. */
 function setModalModoLeitura(leitura) {
   var c = getFormModalCampos();
   var readonly = !!leitura;
@@ -600,6 +669,7 @@ function setModalModoLeitura(leitura) {
   }
 }
 
+/** Abre o modal em modo leitura para a HQ com o id informado. */
 function abrirModalDetalhes(id) {
   var hq = db.getHqById(id);
   if (!hq) return;
@@ -613,6 +683,7 @@ function abrirModalDetalhes(id) {
   }
 }
 
+/** Abre o modal em modo adicionar (nova HQ). */
 function abrirModalAdicionar() {
   modalHqIdAtual = null;
   preencherFormModal(null);
@@ -624,6 +695,7 @@ function abrirModalAdicionar() {
   }
 }
 
+/** Lê os valores atuais do formulário do modal e retorna objeto para salvar no banco. */
 function obterDadosFormModal() {
   var c = getFormModalCampos();
   return {
@@ -635,6 +707,7 @@ function obterDadosFormModal() {
   };
 }
 
+/** Valida campos obrigatórios do modal; retorna true se válido e remove/adiciona is-invalid. */
 function validarFormModal() {
   var c = getFormModalCampos();
   var valido = true;
@@ -651,6 +724,7 @@ function validarFormModal() {
   return valido;
 }
 
+/** Liga eventos do modal: capa, editar, cancelar, excluir, salvar e botões Adicionar. */
 function bindModalHqEventos() {
   var btnEditar = document.getElementById('modal-hq-btn-editar');
   var btnCancelar = document.getElementById('modal-hq-btn-cancelar');
@@ -760,6 +834,7 @@ function bindModalHqEventos() {
   botoesAdicionar.forEach(function (btn) { btn.addEventListener('click', abrirModalAdicionar); });
 }
 
+/** Persiste edição da HQ atual no banco e atualiza interface + alert. */
 function salvarEdicaoHq(dados) {
   if (modalHqIdAtual == null) return;
   db.updateHq(modalHqIdAtual, dados);
@@ -770,27 +845,39 @@ function salvarEdicaoHq(dados) {
   mostrarModalSucesso('HQ atualizada com sucesso.');
 }
 
-function mostrarModalSucesso(mensagem) {
-  var container = document.getElementById('acervo-alert-container');
-  if (!container) return;
-  container.innerHTML = '';
+// ========== ALERTAS, TOASTS E UI AUXILIAR ==========
+
+/** Exibe um Toast de sucesso (ao salvar ou deletar HQ). Alguns após 5s ou ao fechar. */
+function mostrarToast(mensagem) {
+  var container = document.getElementById('toast-container');
+  if (!container || !window.bootstrap || !window.bootstrap.Toast) return;
   var msg = mensagem || 'Operação realizada com sucesso.';
-  var alertEl = document.createElement('div');
-  alertEl.className = 'alert alert-success alert-dismissible fade show mb-0';
-  alertEl.setAttribute('role', 'alert');
-  alertEl.innerHTML = msg + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>';
-  container.appendChild(alertEl);
-  var acervoSection = document.getElementById('acervo');
-  if (acervoSection) acervoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  setTimeout(function () {
-    if (alertEl.parentNode) {
-      var bsAlert = bootstrap.Alert.getOrCreateInstance(alertEl);
-      if (bsAlert) bsAlert.close();
-    }
-  }, 5000);
+  var toastEl = document.createElement('div');
+  toastEl.className = 'toast align-items-center text-bg-success border-0';
+  toastEl.setAttribute('role', 'alert');
+  toastEl.setAttribute('aria-live', 'assertive');
+  toastEl.setAttribute('aria-atomic', 'true');
+  toastEl.innerHTML =
+    '<div class="d-flex">' +
+      '<div class="toast-body">' + escapeHtml(msg) + '</div>' +
+      '<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar"></button>' +
+    '</div>';
+  container.appendChild(toastEl);
+  toastEl.addEventListener('hidden.bs.toast', function () {
+    if (toastEl.parentNode) toastEl.parentNode.removeChild(toastEl);
+  });
+  var toast = new bootstrap.Toast(toastEl, { delay: 5000 });
+  toast.show();
 }
 
-// Alterna texto "Ver mais" / "Ver menos" no collapse das últimas HQs
+/** Exibe notificação de sucesso (Toast + scroll para o acervo). Usado ao adicionar, editar ou excluir HQ. */
+function mostrarModalSucesso(mensagem) {
+  mostrarToast(mensagem);
+  var acervoSection = document.getElementById('acervo');
+  if (acervoSection) acervoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/** Alterna o texto do botão "Ver mais" / "Ver menos" conforme o collapse das últimas HQs. */
 function bindUltimasVerMais() {
   var collapseEl = document.getElementById('ultimas-hqs-collapse');
   var btn = document.getElementById('ultimas-ver-mais-btn');
@@ -800,7 +887,9 @@ function bindUltimasVerMais() {
   }
 }
 
-// Inicialização ao carregar a página
+// ========== INICIALIZAÇÃO ==========
+// Carrega seed (se banco vazio), atualiza painel inicial, bind de eventos e primeira renderização do acervo.
+
 if (typeof window !== 'undefined') {
   initHqsIniciais().then(function () {
     atualizaPainelInicial();
