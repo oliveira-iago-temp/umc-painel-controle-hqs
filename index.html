@@ -4,13 +4,326 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Central de Quadrinhos</title>
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap e CSS do projeto -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+
+<body data-bs-spy="scroll" data-bs-target="#nav-lateral" data-bs-offset="70">
   <h1 class="visually-hidden">Central de Quadrinhos</h1>
 
+  <!-- Navbar: desktop com links, mobile abre menu-lateral -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-hq">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#inicio">Central de Quadrinhos</a>
+
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="navbarPrincipal">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#inicio">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="#acervo">Acervo</a></li>
+          <li class="nav-item"><a class="nav-link" href="#estatisticas">Estatísticas</a></li>
+        </ul>
+      </div>
+
+      <!-- Botão hambúrguer (mobile) -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#menu-lateral"
+        aria-controls="menu-lateral"
+        aria-label="Abrir menu"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Menu lateral offcanvas, nav-lateral usado pelo scrollspy -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="menu-lateral" aria-labelledby="menu-lateral-label">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="menu-lateral-label">Menu</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+    </div>
+    <div class="offcanvas-body">
+      <nav id="nav-lateral" class="nav flex-column nav-pills">
+        <a class="nav-link" href="#inicio">Início</a>
+        <a class="nav-link" href="#acervo">Acervo</a>
+        <a class="nav-link" href="#estatisticas">Estatísticas</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="conteudo-principal">
+
+    <!-- Seção Início  -->
+    <div id="inicio" class="container container-topo">
+      <div class="row mb-3">
+        <div class="col-12">
+          <h1 class="titulo-principal mb-0">Central de Quadrinhos</h1>
+        </div>
+      </div>
+      <div class="row row-topo-colunas">
+        <!-- Coluna esquerda: indicadores e listas -->
+        <div class="col-12 col-lg-6 ordem-2 ordem-lg-1 coluna-esquerda">
+          <!-- Card total de HQs, contador-hqs -->
+          <div class="card cartao-bloco mb-3">
+            <div class="card-body">
+              <span class="cartao-indicador__rotulo d-block mb-1">Total de HQs cadastradas</span>
+              <span class="cartao-indicador__valor" id="contador-hqs">0</span>
+            </div>
+          </div>
+          <!-- Card últimas 3 HQs, lista-ultimas-hqs -->
+          <div class="card cartao-bloco mb-3">
+            <div class="card-body">
+              <span class="cartao-indicador__rotulo d-block mb-2">Últimas 3 HQs cadastradas</span>
+              <ul id="lista-ultimas-hqs" class="lista-ultimas list-unstyled mb-0"></ul>
+            </div>
+          </div>
+          <!-- Top 3 roteiristas e desenhistas, lista-top-roteiristas e lista-top-desenhistas -->
+          <div class="row g-2">
+            <div class="col-6">
+              <div class="card cartao-bloco h-100">
+                <div class="card-body">
+                  <span class="cartao-indicador__rotulo d-block mb-2">Top 3 roteiristas</span>
+                  <ul id="lista-top-roteiristas" class="lista-tops list-unstyled mb-0"></ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="card cartao-bloco h-100">
+                <div class="card-body">
+                  <span class="cartao-indicador__rotulo d-block mb-2">Top 3 desenhistas</span>
+                  <ul id="lista-top-desenhistas" class="lista-tops list-unstyled mb-0"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coluna direita: card Destaques e carrossel carousel-destaques -->
+        <div class="col-12 col-lg-6 ordem-1 ordem-lg-2 coluna-carrossel">
+          <div class="card card-destaques h-100">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Destaques</h5>
+            </div>
+            <div class="card-body p-0 d-flex flex-column">
+              <p class="subtitulo-destaques mb-0 px-3 pt-2">Revistas em quadrinhos de maior relevância.</p>
+              <div class="carrossel-topo">
+                <div id="carousel-destaques" class="carousel slide carrossel-com-borda" data-bs-ride="carousel" data-bs-interval="5000">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carousel-destaques" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carousel-destaques" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carousel-destaques" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src="assets/images/banners/thumb-amazing-fantasy-1.jpg" class="d-block w-100 img-carrossel" alt="Amazing Fantasy">
+                      <div class="carousel-caption caption-destaques">
+                        <h5>Amazing Fantasy #15</h5>
+                        <p>Primeira aparição do Homem-Aranha (1962). Peter Parker ganha seus poderes após a picada de uma aranha radioativa.</p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="assets/images/banners/thumb-fantastic-four.jpg" class="d-block w-100 img-carrossel" alt="Quarteto Fantástico">
+                      <div class="carousel-caption caption-destaques">
+                        <h5>Fantastic Four #1</h5>
+                        <p>Primeira aparição do Quarteto Fantástico (1961). Reed, Sue, Ben e Johnny ganham poderes em uma missão espacial.</p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="assets/images/banners/thumb-1920-1369529.jpeg" class="d-block w-100 img-carrossel" alt="Destaque quadrinhos">
+                      <div class="carousel-caption caption-destaques">
+                        <h5>Clássicos em destaque</h5>
+                        <p>Os quadrinhos que marcaram gerações e definiram a cultura dos super-heróis.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-destaques" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carousel-destaques" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Próximo</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção Acervo, card #acervo com filtros, grade de cards e paginação -->
+    <section class="py-4">
+      <div class="container">
+        <div class="card mb-3 w-100" id="acervo">
+          <div class="card-header">
+            <h4 class="mb-0">Acervo</h4>
+          </div>
+          <div class="card-body">
+            <!-- Filtros: acervo-busca, acervo-roteirista, acervo-desenhista, botão acervo-btn-adicionar -->
+            <div class="row g-2 align-items-end mb-4">
+              <div class="col-12 col-md-3">
+                <label for="acervo-busca" class="form-label">Busca</label>
+                <input type="text" id="acervo-busca" class="form-control" placeholder="Nome ou descrição..." aria-label="Buscar por nome ou descrição">
+              </div>
+              <div class="col-6 col-md-2">
+                <label for="acervo-roteirista" class="form-label">Roteirista</label>
+                <select id="acervo-roteirista" class="form-select" aria-label="Filtrar por roteirista">
+                  <option value="">Todos</option>
+                </select>
+              </div>
+              <div class="col-6 col-md-2">
+                <label for="acervo-desenhista" class="form-label">Desenhista</label>
+                <select id="acervo-desenhista" class="form-select" aria-label="Filtrar por desenhista">
+                  <option value="">Todos</option>
+                </select>
+              </div>
+              <div class="col-12 col-md-auto ms-md-auto">
+                <button type="button" class="btn btn-primary btn-lg" id="acervo-btn-adicionar">Adicionar novo</button>
+              </div>
+            </div>
+            <!-- Grade de cards das HQs, acervo-cards (preenchida por JS) -->
+            <div id="acervo-cards" class="row g-4 mb-3"></div>
+            <!-- Paginação do acervo, acervo-paginacao (preenchida por JS) -->
+            <nav id="acervo-paginacao" class="d-flex justify-content-center" aria-label="Navegação do acervo"></nav>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção Estatísticas #estatisticas -->
+    <section id="estatisticas" class="py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="mb-3">Estatísticas</h2>
+            <p>Progresso e filtros.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal modal-hq: detalhes, editar e adicionar HQ -->
+  <div class="modal fade modal-sem-scroll" id="modal-hq" tabindex="-1" aria-labelledby="modal-hq-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-hq-label">Detalhes da HQ</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="form-hq-modal">
+            <!-- Linha capa (modal-hq-imagem, modal-hq-imagem-file), título (modal-hq-titulo) e descrição (modal-hq-descricao) -->
+            <div class="row g-3 mb-3 align-items-start">
+              <div class="col-auto">
+                <label class="form-label d-block">Capa</label>
+                <img id="modal-hq-imagem" src="" alt="" class="img-fluid rounded border" style="height: 170px; width: 115px; object-fit: cover;">
+                <input type="file" class="visually-hidden" id="modal-hq-imagem-file" accept="image/*">
+              </div>
+              <div class="col">
+                <div class="mb-3">
+                  <label class="form-label">Título</label>
+                  <input type="text" class="form-control" id="modal-hq-titulo" readonly>
+                </div>
+                <div class="mb-0">
+                  <label class="form-label">Descrição</label>
+                  <textarea class="form-control" id="modal-hq-descricao" rows="3" readonly></textarea>
+                </div>
+              </div>
+            </div>
+            <!-- Linha roteirista (modal-hq-roteirista), desenhista (modal-hq-desenhista), ano (modal-hq-ano) -->
+            <div class="row g-2 mb-3">
+              <div class="col">
+                <label class="form-label">Roteirista</label>
+                <input type="text" class="form-control" id="modal-hq-roteirista" readonly>
+              </div>
+              <div class="col">
+                <label class="form-label">Desenhista</label>
+                <input type="text" class="form-control" id="modal-hq-desenhista" readonly>
+              </div>
+              <div class="col">
+                <label class="form-label">Ano de publicação</label>
+                <input type="number" class="form-control" id="modal-hq-ano" readonly>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- Rodapé: modo leitura (modal-hq-botoes-leitura) Fechar e Editar; modo edição (modal-hq-botoes-edicao) Cancelar e Salvar -->
+        <div class="modal-footer">
+          <div id="modal-hq-botoes-leitura" class="w-100 d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary btn-acao-modal" data-bs-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-primary btn-acao-modal" id="modal-hq-btn-editar">Editar</button>
+          </div>
+          <div id="modal-hq-botoes-edicao" class="w-100 d-flex justify-content-between d-none">
+            <button type="button" class="btn btn-outline-secondary btn-acao-modal" id="modal-hq-btn-cancelar">Cancelar</button>
+            <button type="button" class="btn btn-danger btn-acao-modal" id="modal-hq-btn-excluir">Excluir</button>
+            <button type="button" class="btn btn-primary btn-acao-modal" id="modal-hq-btn-salvar">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal confirmar exclusão -->
+  <div class="modal fade" id="modal-confirmar-exclusao" tabindex="-1" aria-labelledby="modal-confirmar-exclusao-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-confirmar-exclusao-label">Excluir HQ</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0">Tem certeza que deseja excluir esta HQ?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary btn-acao-modal" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger btn-acao-modal" id="modal-confirmar-exclusao-btn">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de sucesso (adicionar, editar, etc.) -->
+  <div class="modal fade" id="modal-sucesso" tabindex="-1" aria-labelledby="modal-sucesso-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-sucesso-label">Sucesso</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <p id="modal-sucesso-mensagem" class="mb-0">Operação realizada com sucesso.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts Bootstrap e main.js -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    // Fecha o offcanvas ao clicar em um link (melhor em celular)
+    document.querySelectorAll('#nav-lateral .nav-link').forEach(function (link) {
+      link.addEventListener('click', function () {
+        var menu = document.getElementById('menu-lateral');
+        if (menu && window.innerWidth < 992) {
+          bootstrap.Offcanvas.getInstance(menu)?.hide();
+        }
+      });
+    });
+  </script>
 </body>
 </html>

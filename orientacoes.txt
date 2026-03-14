@@ -1,0 +1,50 @@
+Criando um Painel Interativo com Bootstrap
+
+Objetivo:
+
+Aplicar os principais componentes do Bootstrap para desenvolver uma interface web moderna, responsiva e interativa, simulando um Painel de Controle de um Sistema (Tema de sua escolha)
+
+Situação:
+
+Você foi contratado para desenvolver a interface de um Painel de Controle, utilizando exclusivamente o framework Bootstrap.
+
+O painel deverá conter os seguintes elementos:
+
+Requisitos Obrigatórios:
+
+1. Layout e Navegação
+
+-Uma Navbar fixa no topo com links de navegação.
+-Um Offcanvas Menu para navegação lateral (menu hamburguer em telas pequenas).
+-Estrutura responsiva usando Container e Columns (Grid System).
+
+2. Elementos de Interface
+
+-Um botão (Button) de “Adicionar Curso”.
+-Um Modal com formulário para adicionar curso, contendo:
+-Form Controls: inputs, select, checkboxes, range.
+-Input Group, Float Labels e Validação de Formulário.
+
+3. Componentes Visuais
+
+-Exibir cursos cadastrados em Cards, com botão de “Detalhes”.
+-Ao clicar em “Detalhes”, abrir um Collapse com descrição do curso.
+-Usar Spinners enquanto dados estão sendo carregados (simulação).
+-Mostrar mensagens com Alerts para ações do usuário (sucesso/erro).
+-Notificações com Toasts ao salvar ou deletar um curso.
+-Um Progress Bar indicando a porcentagem de cursos cadastrados.
+-Um Dropdown para filtrar cursos por categoria.
+-Implementar Pagination se houver muitos cursos.
+-Incluir Popovers em botões ou ícones com dicas de uso.
+-Ativar Scrollspy em uma página com várias seções.
+
+4. Extra
+
+-Um Carousel com imagens dos cursos em destaque na página inicial.
+
+Entrega:
+
+Suba o projeto em um repositório GitHub  
+Envie o link do github pages
+
+Use o site oficial do Bootstrap como referência: https://getbootstrap.com
