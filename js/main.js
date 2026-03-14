@@ -7,10 +7,10 @@ const db = {
     return this.hqs;
   },
 
-  // Adiciona e devolve a criada. HQ: { titulo, descricao, anoPublicacao, roteirista, desenhista, imagem (base64) }
+  // Adiciona e devolve a criada. Nova HQ fica no início da lista (primeira da lista).
   addHq(hq) {
     const nova = { id: this._nextId++, ...hq, createdAt: new Date().toISOString() };
-    this.hqs.push(nova);
+    this.hqs.unshift(nova);
     return nova;
   },
 
@@ -40,24 +40,8 @@ const db = {
   }
 };
 
-// Dados das HQs default
+// Dados das HQs default (últimas 4 na ordem: id 6=Wonder Woman, 7=Amazing Fantasy, 8=Captain America, 9=Spider-Man #316)
 const hqsIniciais = [
-  {
-    titulo: 'Amazing Fantasy #15',
-    descricao: 'Primeira aparição do Homem-Aranha. Peter Parker ganha seus poderes após a picada de uma aranha radioativa.',
-    anoPublicacao: 1962,
-    roteirista: 'Stan Lee',
-    desenhista: 'Steve Ditko',
-    imagemCaminho: 'assets/images/hqs/amazing-fantasy-15.jpg'
-  },
-  {
-    titulo: 'Detective Comics #27',
-    descricao: 'Primeira aparição do Batman. Bruce Wayne estreia como o Cavaleiro das Trevas em Gotham City.',
-    anoPublicacao: 1939,
-    roteirista: 'Bill Finger',
-    desenhista: 'Bob Kane',
-    imagemCaminho: 'assets/images/hqs/detective-comic-27.webp'
-  },
   {
     titulo: 'Fantastic Four #1',
     descricao: 'Primeira aparição do Quarteto Fantástico. Reed, Sue, Ben e Johnny ganham poderes em uma missão espacial.',
@@ -67,36 +51,12 @@ const hqsIniciais = [
     imagemCaminho: 'assets/images/hqs/fantastic-four.webp'
   },
   {
-    titulo: 'Captain America #1',
-    descricao: 'Primeira aparição do Capitão América. Steve Rogers enfrenta os nazistas na Segunda Guerra Mundial.',
-    anoPublicacao: 1941,
-    roteirista: 'Joe Simon',
-    desenhista: 'Jack Kirby',
-    imagemCaminho: 'assets/images/hqs/captain-america-1-1941.jpeg'
-  },
-  {
     titulo: 'Demolidor: O Homem Sem Medo',
     descricao: 'Matt Murdock, o Demolidor, combate o crime em Hell\'s Kitchen com seus sentidos apurados.',
     anoPublicacao: 1979,
     roteirista: 'Frank Miller',
     desenhista: 'Frank Miller',
     imagemCaminho: 'assets/images/hqs/demolidor-o-homem-sem-medo.jpeg'
-  },
-  {
-    titulo: 'Sensation Comics / Wonder Woman',
-    descricao: 'Primeira aparição da Mulher-Maravilha. Diana de Themyscira entra no mundo dos homens.',
-    anoPublicacao: 1941,
-    roteirista: 'William Moulton Marston',
-    desenhista: 'H.G. Peter',
-    imagemCaminho: 'assets/images/hqs/sensation_comics_wonder_woman.jpg'
-  },
-  {
-    titulo: 'The Amazing Spider-Man #316',
-    descricao: 'O Nascimento de Venom. Eddie Brock e o simbionte se unem para enfrentar o Homem-Aranha.',
-    anoPublicacao: 1988,
-    roteirista: 'David Michelinie',
-    desenhista: 'Todd McFarlane',
-    imagemCaminho: 'assets/images/hqs/the-amazing-spiderman-316-o-nascimento-de-venom-1988.webp'
   },
   {
     titulo: 'Journey Into Mystery #83',
@@ -113,6 +73,47 @@ const hqsIniciais = [
     roteirista: 'Stan Lee',
     desenhista: 'Don Heck',
     imagemCaminho: 'assets/images/hqs/tales-of-suspense-iron-man.jpeg'
+  },
+  {
+    titulo: 'Detective Comics #27',
+    descricao: 'Primeira aparição do Batman. Bruce Wayne estreia como o Cavaleiro das Trevas em Gotham City.',
+    anoPublicacao: 1939,
+    roteirista: 'Bill Finger',
+    desenhista: 'Bob Kane',
+    imagemCaminho: 'assets/images/hqs/detective-comic-27.webp'
+  },
+  // Ordem ao preencher: id 6, 7, 8, 9
+  {
+    titulo: 'Sensation Comics / Wonder Woman',
+    descricao: 'Primeira aparição da Mulher-Maravilha. Diana de Themyscira entra no mundo dos homens.',
+    anoPublicacao: 1941,
+    roteirista: 'William Moulton Marston',
+    desenhista: 'H.G. Peter',
+    imagemCaminho: 'assets/images/hqs/sensation_comics_wonder_woman.jpg'
+  },
+  {
+    titulo: 'Amazing Fantasy #15',
+    descricao: 'Primeira aparição do Homem-Aranha. Peter Parker ganha seus poderes após a picada de uma aranha radioativa.',
+    anoPublicacao: 1962,
+    roteirista: 'Stan Lee',
+    desenhista: 'Steve Ditko',
+    imagemCaminho: 'assets/images/hqs/amazing-fantasy-15.jpg'
+  },
+  {
+    titulo: 'Captain America #1',
+    descricao: 'Primeira aparição do Capitão América. Steve Rogers enfrenta os nazistas na Segunda Guerra Mundial.',
+    anoPublicacao: 1941,
+    roteirista: 'Joe Simon',
+    desenhista: 'Jack Kirby',
+    imagemCaminho: 'assets/images/hqs/captain-america-1-1941.jpeg'
+  },
+  {
+    titulo: 'The Amazing Spider-Man #316',
+    descricao: 'O Nascimento de Venom. Eddie Brock e o simbionte se unem para enfrentar o Homem-Aranha.',
+    anoPublicacao: 1988,
+    roteirista: 'David Michelinie',
+    desenhista: 'Todd McFarlane',
+    imagemCaminho: 'assets/images/hqs/the-amazing-spiderman-316-o-nascimento-de-venom-1988.webp'
   }
 ];
 
@@ -156,10 +157,10 @@ async function initHqsIniciais() {
   }
 }
 
-// Retorna as últimas 3 HQs (por id/ordem de inclusão)
-function getUltimas3Hqs() {
+// Retorna as últimas N HQs (por id/ordem de inclusão; até 6 para o painel)
+function getUltimasHqs(n) {
   var todas = db.getAllHqs();
-  return todas.slice(-3).reverse();
+  return todas.slice(0, n || 6);
 }
 
 // Retorna top 3 roteiristas (mais HQs)
@@ -192,16 +193,36 @@ function getTop3Desenhistas() {
 
 // Atualiza todos os blocos do painel inicial
 function atualizaPainelInicial() {
-  var elContador = document.getElementById('contador-hqs');
-  if (elContador) elContador.textContent = db.getAllHqs().length;
-
   var elUltimas = document.getElementById('lista-ultimas-hqs');
+  var elUltimasMais = document.getElementById('lista-ultimas-hqs-mais');
+  var elVerMaisCtn = document.getElementById('ultimas-ver-mais-ctn');
+  var elVerMaisBtn = document.getElementById('ultimas-ver-mais-btn');
   if (elUltimas) {
-    var ultimas = getUltimas3Hqs();
-    elUltimas.innerHTML = ultimas.map(function (hq) {
+    var todasUltimas = getUltimasHqs(6);
+    var primeiras3 = todasUltimas.slice(0, 3);
+    var proximas3 = todasUltimas.slice(3, 6);
+    elUltimas.innerHTML = primeiras3.map(function (hq) {
       return '<li>' + escapeHtml(hq.titulo) + ' – ' + (hq.anoPublicacao || '') + '</li>';
     }).join('');
-    if (ultimas.length === 0) elUltimas.innerHTML = '<li class="text-muted">Nenhuma HQ cadastrada.</li>';
+    if (primeiras3.length === 0) elUltimas.innerHTML = '<li class="text-muted">Nenhuma HQ cadastrada.</li>';
+    if (elUltimasMais) {
+      elUltimasMais.innerHTML = proximas3.map(function (hq) {
+        return '<li>' + escapeHtml(hq.titulo) + ' – ' + (hq.anoPublicacao || '') + '</li>';
+      }).join('');
+    }
+    if (elVerMaisCtn && elVerMaisBtn) {
+      if (proximas3.length > 0) {
+        elVerMaisCtn.classList.remove('d-none');
+        elVerMaisBtn.textContent = 'Ver mais';
+        var collapseEl = document.getElementById('ultimas-hqs-collapse');
+        if (collapseEl && window.bootstrap) {
+          var col = bootstrap.Collapse.getInstance(collapseEl);
+          if (col) col.hide();
+        }
+      } else {
+        elVerMaisCtn.classList.add('d-none');
+      }
+    }
   }
 
   var elRoteiristas = document.getElementById('lista-top-roteiristas');
@@ -232,11 +253,41 @@ function escapeHtml(texto) {
 
 // --- Acervo: filtros, grade e paginação (10 por página) ---
 
-var ACERVO_POR_PAGINA = 10;
+var ACERVO_POR_PAGINA = 4;
+var ACERVO_ANO_FALLBACK = 1930;
 var acervoEstado = {
   paginaAtual: 1,
-  filtros: { busca: '', roteirista: '', desenhista: '' }
+  filtros: { busca: '', roteirista: '', desenhista: '', anoMin: ACERVO_ANO_FALLBACK }
 };
+
+function getAnoMinAcervo() {
+  var hqs = db.getAllHqs();
+  var anos = hqs.map(function (hq) { return hq.anoPublicacao; }).filter(function (a) { return a != null && !isNaN(parseInt(a, 10)); });
+  if (anos.length === 0) return ACERVO_ANO_FALLBACK;
+  return Math.min.apply(null, anos);
+}
+
+function getAnoMaxAcervo() {
+  return new Date().getFullYear();
+}
+
+function syncRangeAnoBounds() {
+  var anoEl = document.getElementById('acervo-ano');
+  var anoValorSpan = document.getElementById('acervo-ano-valor');
+  if (!anoEl) return;
+  var anoMin = getAnoMinAcervo();
+  var anoMax = getAnoMaxAcervo();
+  anoEl.setAttribute('min', anoMin);
+  anoEl.setAttribute('max', anoMax);
+  var val = parseInt(anoEl.value, 10);
+  if (!isNaN(val)) {
+    if (val < anoMin) anoEl.value = anoMin;
+    else if (val > anoMax) anoEl.value = anoMax;
+  } else {
+    anoEl.value = anoMin;
+  }
+  if (anoValorSpan) anoValorSpan.textContent = anoEl.value;
+}
 var modalHqIdAtual = null;
 var IMAGEM_SEM_CAPA = 'assets/images/hqs/sem-capa.jpg';
 
@@ -280,6 +331,11 @@ function filtrarHqs(filtros) {
   }
   if (filtros.desenhista) {
     lista = lista.filter(function (hq) { return (hq.desenhista || '').trim() === filtros.desenhista; });
+  }
+
+  var anoMin = parseInt(filtros.anoMin, 10);
+  if (!isNaN(anoMin)) {
+    lista = lista.filter(function (hq) { return (hq.anoPublicacao || 0) >= anoMin; });
   }
 
   return lista;
@@ -338,7 +394,7 @@ function renderizarCardsAcervo(hqs) {
 
   hqs.forEach(function (hq) {
     var col = document.createElement('div');
-    col.className = 'col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2';
+    col.className = 'col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2';
     var card = document.createElement('div');
     card.className = 'card h-100 cartao-hq';
 
@@ -346,8 +402,6 @@ function renderizarCardsAcervo(hqs) {
     img.className = 'card-img-top cartao-hq__img';
     img.alt = escapeHtml(hq.titulo);
     img.src = hq.imagem || '';
-    img.style.maxHeight = '160px';
-    img.style.objectFit = 'contain';
     img.style.backgroundColor = '#f7f8fa';
     card.appendChild(img);
 
@@ -403,20 +457,44 @@ function renderizarPaginacaoAcervo(totalPaginas, paginaAtual) {
   nav.appendChild(ul);
 }
 
-function atualizarAcervo() {
-  var lista = filtrarHqs(acervoEstado.filtros);
-  var resultado = paginar(lista, acervoEstado.paginaAtual, ACERVO_POR_PAGINA);
+var ACERVO_LOADING_MS = 500;
 
-  acervoEstado.paginaAtual = resultado.paginaAtual;
-  renderizarCardsAcervo(resultado.itens);
-  renderizarPaginacaoAcervo(resultado.totalPaginas, resultado.paginaAtual);
+function mostrarLoadingAcervo() {
+  var container = document.getElementById('acervo-cards');
+  var nav = document.getElementById('acervo-paginacao');
+  if (container) {
+    container.innerHTML = '<div class="col-12 d-flex flex-column align-items-center justify-content-center py-5 acervo-loading"><div class="spinner-border" role="status" style="width: 3rem; height: 3rem;"><span class="visually-hidden">Carregando...</span></div><p class="mt-2 mb-0 text-muted">Carregando...</p></div>';
+    container.classList.remove('acervo-vazio');
+  }
+  if (nav) nav.innerHTML = '';
+}
+
+function atualizarAcervo() {
+  mostrarLoadingAcervo();
+  setTimeout(function () {
+    syncRangeAnoBounds();
+    var lista = filtrarHqs(acervoEstado.filtros);
+    var resultado = paginar(lista, acervoEstado.paginaAtual, ACERVO_POR_PAGINA);
+
+    acervoEstado.paginaAtual = resultado.paginaAtual;
+    var elContagem = document.getElementById('acervo-itens-encontrados');
+    if (elContagem) {
+      var n = lista.length;
+      elContagem.textContent = n === 0 ? 'Nenhum resultado encontrado' : (n === 1 ? '1 item encontrado' : n + ' itens encontrados');
+    }
+    renderizarCardsAcervo(resultado.itens);
+    renderizarPaginacaoAcervo(resultado.totalPaginas, resultado.paginaAtual);
+  }, ACERVO_LOADING_MS);
 }
 
 function initAcervo() {
   renderizarFiltrosAcervo();
+  syncRangeAnoBounds();
+  var anoEl = document.getElementById('acervo-ano');
   acervoEstado.filtros.busca = (document.getElementById('acervo-busca') && document.getElementById('acervo-busca').value) || '';
   acervoEstado.filtros.roteirista = (document.getElementById('acervo-roteirista') && document.getElementById('acervo-roteirista').value) || '';
   acervoEstado.filtros.desenhista = (document.getElementById('acervo-desenhista') && document.getElementById('acervo-desenhista').value) || '';
+  acervoEstado.filtros.anoMin = (anoEl && !isNaN(parseInt(anoEl.value, 10))) ? parseInt(anoEl.value, 10) : getAnoMinAcervo();
   acervoEstado.paginaAtual = 1;
   atualizarAcervo();
 }
@@ -425,18 +503,26 @@ function bindAcervoEventos() {
   var busca = document.getElementById('acervo-busca');
   var selR = document.getElementById('acervo-roteirista');
   var selD = document.getElementById('acervo-desenhista');
+  var anoRange = document.getElementById('acervo-ano');
+  var anoValor = document.getElementById('acervo-ano-valor');
 
   function aplicarFiltros() {
     acervoEstado.filtros.busca = (busca && busca.value) ? busca.value.trim() : '';
     acervoEstado.filtros.roteirista = (selR && selR.value) || '';
     acervoEstado.filtros.desenhista = (selD && selD.value) || '';
+    acervoEstado.filtros.anoMin = (anoRange && !isNaN(parseInt(anoRange.value, 10))) ? parseInt(anoRange.value, 10) : getAnoMinAcervo();
     acervoEstado.paginaAtual = 1;
+    if (anoValor && anoRange) anoValor.textContent = anoRange.value;
     atualizarAcervo();
   }
 
   if (busca) busca.addEventListener('input', aplicarFiltros);
   if (selR) selR.addEventListener('change', aplicarFiltros);
   if (selD) selD.addEventListener('change', aplicarFiltros);
+  if (anoRange) {
+    anoRange.addEventListener('input', aplicarFiltros);
+    anoRange.addEventListener('change', aplicarFiltros);
+  }
 
   var containerCards = document.getElementById('acervo-cards');
   if (containerCards) {
@@ -459,7 +545,8 @@ function getFormModalCampos() {
     roteirista: document.getElementById('modal-hq-roteirista'),
     desenhista: document.getElementById('modal-hq-desenhista'),
     imagem: document.getElementById('modal-hq-imagem'),
-    imagemFile: document.getElementById('modal-hq-imagem-file')
+    imagemFile: document.getElementById('modal-hq-imagem-file'),
+    digital: document.getElementById('modal-hq-digital')
   };
 }
 
@@ -477,6 +564,7 @@ function preencherFormModal(hq) {
       c.imagem.alt = 'Sem capa';
     }
     if (c.imagemFile) c.imagemFile.value = '';
+    if (c.digital) c.digital.checked = false;
     return;
   }
   if (c.titulo) c.titulo.value = hq.titulo || '';
@@ -497,6 +585,7 @@ function setModalModoLeitura(leitura) {
   [c.titulo, c.descricao, c.ano, c.roteirista, c.desenhista].forEach(function (el) {
     if (el) el.readOnly = readonly;
   });
+  if (c.digital) c.digital.disabled = readonly;
   if (c.imagem) {
     c.imagem.classList.toggle('capa-editavel', !readonly);
   }
@@ -667,8 +756,8 @@ function bindModalHqEventos() {
     });
   }
 
-  var btnAdicionar = document.getElementById('acervo-btn-adicionar');
-  if (btnAdicionar) btnAdicionar.addEventListener('click', abrirModalAdicionar);
+  var botoesAdicionar = document.querySelectorAll('.acervo-btn-adicionar');
+  botoesAdicionar.forEach(function (btn) { btn.addEventListener('click', abrirModalAdicionar); });
 }
 
 function salvarEdicaoHq(dados) {
@@ -682,12 +771,32 @@ function salvarEdicaoHq(dados) {
 }
 
 function mostrarModalSucesso(mensagem) {
-  var el = document.getElementById('modal-sucesso-mensagem');
-  if (el) el.textContent = mensagem || 'Operação realizada com sucesso.';
-  var modalEl = document.getElementById('modal-sucesso');
-  if (modalEl && window.bootstrap) {
-    var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
-    modal.show();
+  var container = document.getElementById('acervo-alert-container');
+  if (!container) return;
+  container.innerHTML = '';
+  var msg = mensagem || 'Operação realizada com sucesso.';
+  var alertEl = document.createElement('div');
+  alertEl.className = 'alert alert-success alert-dismissible fade show mb-0';
+  alertEl.setAttribute('role', 'alert');
+  alertEl.innerHTML = msg + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>';
+  container.appendChild(alertEl);
+  var acervoSection = document.getElementById('acervo');
+  if (acervoSection) acervoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(function () {
+    if (alertEl.parentNode) {
+      var bsAlert = bootstrap.Alert.getOrCreateInstance(alertEl);
+      if (bsAlert) bsAlert.close();
+    }
+  }, 5000);
+}
+
+// Alterna texto "Ver mais" / "Ver menos" no collapse das últimas HQs
+function bindUltimasVerMais() {
+  var collapseEl = document.getElementById('ultimas-hqs-collapse');
+  var btn = document.getElementById('ultimas-ver-mais-btn');
+  if (collapseEl && btn) {
+    collapseEl.addEventListener('show.bs.collapse', function () { btn.textContent = 'Ver menos'; });
+    collapseEl.addEventListener('hidden.bs.collapse', function () { btn.textContent = 'Ver mais'; });
   }
 }
 
@@ -695,6 +804,7 @@ function mostrarModalSucesso(mensagem) {
 if (typeof window !== 'undefined') {
   initHqsIniciais().then(function () {
     atualizaPainelInicial();
+    bindUltimasVerMais();
     renderizarFiltrosAcervo();
     bindAcervoEventos();
     bindModalHqEventos();

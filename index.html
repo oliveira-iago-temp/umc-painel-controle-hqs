@@ -26,7 +26,6 @@
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="#inicio">Início</a></li>
           <li class="nav-item"><a class="nav-link" href="#acervo">Acervo</a></li>
-          <li class="nav-item"><a class="nav-link" href="#estatisticas">Estatísticas</a></li>
         </ul>
       </div>
 
@@ -54,7 +53,6 @@
       <nav id="nav-lateral" class="nav flex-column nav-pills">
         <a class="nav-link" href="#inicio">Início</a>
         <a class="nav-link" href="#acervo">Acervo</a>
-        <a class="nav-link" href="#estatisticas">Estatísticas</a>
       </nav>
     </div>
   </div>
@@ -71,18 +69,17 @@
       <div class="row row-topo-colunas">
         <!-- Coluna esquerda: indicadores e listas -->
         <div class="col-12 col-lg-6 ordem-2 ordem-lg-1 coluna-esquerda">
-          <!-- Card total de HQs, contador-hqs -->
+          <!-- Card últimas HQs: 3 visíveis + Ver mais (collapse com mais 3, total 6) -->
           <div class="card cartao-bloco mb-3">
             <div class="card-body">
-              <span class="cartao-indicador__rotulo d-block mb-1">Total de HQs cadastradas</span>
-              <span class="cartao-indicador__valor" id="contador-hqs">0</span>
-            </div>
-          </div>
-          <!-- Card últimas 3 HQs, lista-ultimas-hqs -->
-          <div class="card cartao-bloco mb-3">
-            <div class="card-body">
-              <span class="cartao-indicador__rotulo d-block mb-2">Últimas 3 HQs cadastradas</span>
+              <span class="cartao-indicador__rotulo d-block mb-2">Últimas HQs cadastradas</span>
               <ul id="lista-ultimas-hqs" class="lista-ultimas list-unstyled mb-0"></ul>
+              <div id="ultimas-ver-mais-ctn" class="d-none">
+                <button class="btn btn-link btn-sm p-0 text-decoration-none ultimas-ver-mais-link" type="button" data-bs-toggle="collapse" data-bs-target="#ultimas-hqs-collapse" aria-expanded="false" aria-controls="ultimas-hqs-collapse" id="ultimas-ver-mais-btn">Ver mais</button>
+                <div class="collapse" id="ultimas-hqs-collapse">
+                  <ul id="lista-ultimas-hqs-mais" class="lista-ultimas list-unstyled mb-0 mt-1"></ul>
+                </div>
+              </div>
             </div>
           </div>
           <!-- Top 3 roteiristas e desenhistas, lista-top-roteiristas e lista-top-desenhistas -->
@@ -168,8 +165,10 @@
             <h4 class="mb-0">Acervo</h4>
           </div>
           <div class="card-body">
-            <!-- Filtros: acervo-busca, acervo-roteirista, acervo-desenhista, botão acervo-btn-adicionar -->
-            <div class="row g-2 align-items-end mb-4">
+            <!-- Alert de sucesso (exibido ao adicionar/editar/excluir HQ) -->
+            <div id="acervo-alert-container" class="mb-3" aria-live="polite"></div>
+            <!-- Filtros + botão Adicionar (desktop: botão na mesma linha; mobile: botão fica na linha de baixo) -->
+            <div class="row g-2 align-items-end mb-3">
               <div class="col-12 col-md-3">
                 <label for="acervo-busca" class="form-label">Busca</label>
                 <input type="text" id="acervo-busca" class="form-control" placeholder="Nome ou descrição..." aria-label="Buscar por nome ou descrição">
@@ -186,26 +185,25 @@
                   <option value="">Todos</option>
                 </select>
               </div>
-              <div class="col-12 col-md-auto ms-md-auto">
-                <button type="button" class="btn btn-primary btn-lg" id="acervo-btn-adicionar">Adicionar novo</button>
+              <div class="col-12 col-md-2">
+                <label for="acervo-ano" class="form-label">Ano (mín.) <span id="acervo-ano-valor" class="text-muted">—</span></label>
+                <input type="range" class="form-range" id="acervo-ano" aria-label="Ano mínimo de publicação">
+              </div>
+              <div class="col-12 col-md-auto ms-md-auto text-end d-none d-md-block acervo-btn-adicionar-col">
+                <button type="button" class="btn btn-primary btn-lg acervo-btn-adicionar" id="acervo-btn-adicionar">Adicionar novo</button>
+              </div>
+            </div>
+            <!-- Desktop: só contagem à esquerda. Mobile: contagem (esquerda) e botão Adicionar (direita) na mesma linha -->
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-nowrap acervo-contagem-row">
+              <span id="acervo-itens-encontrados" class="text-muted small">0 itens encontrados</span>
+              <div class="d-md-none acervo-btn-adicionar-col">
+                <button type="button" class="btn btn-primary btn-lg acervo-btn-adicionar">Adicionar novo</button>
               </div>
             </div>
             <!-- Grade de cards das HQs, acervo-cards (preenchida por JS) -->
             <div id="acervo-cards" class="row g-4 mb-3"></div>
             <!-- Paginação do acervo, acervo-paginacao (preenchida por JS) -->
             <nav id="acervo-paginacao" class="d-flex justify-content-center" aria-label="Navegação do acervo"></nav>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Seção Estatísticas #estatisticas -->
-    <section id="estatisticas" class="py-4">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="mb-3">Estatísticas</h2>
-            <p>Progresso e filtros.</p>
           </div>
         </div>
       </div>
@@ -252,8 +250,14 @@
                 <input type="text" class="form-control" id="modal-hq-desenhista" readonly>
               </div>
               <div class="col">
-                <label class="form-label">Ano de publicação</label>
+                <label class="form-label">Ano</label>
                 <input type="number" class="form-control" id="modal-hq-ano" readonly>
+              </div>
+            </div>
+            <div class="mb-3 text-end">
+              <div class="form-check d-inline-block">
+                <input class="form-check-input" type="checkbox" id="modal-hq-digital">
+                <label class="form-check-label" for="modal-hq-digital">Digital</label>
               </div>
             </div>
           </form>
@@ -288,24 +292,6 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary btn-acao-modal" data-bs-dismiss="modal">Cancelar</button>
           <button type="button" class="btn btn-danger btn-acao-modal" id="modal-confirmar-exclusao-btn">Excluir</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal de sucesso (adicionar, editar, etc.) -->
-  <div class="modal fade" id="modal-sucesso" tabindex="-1" aria-labelledby="modal-sucesso-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modal-sucesso-label">Sucesso</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-        </div>
-        <div class="modal-body">
-          <p id="modal-sucesso-mensagem" class="mb-0">Operação realizada com sucesso.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
         </div>
       </div>
     </div>

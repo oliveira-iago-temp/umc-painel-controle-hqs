@@ -44,10 +44,17 @@
   outline: 0;
 }
 
-/* Paginação: tema verde */
+/* Paginação: tema verde, mais largura e espaço entre itens */
+.pagination {
+  gap: 0.5rem;
+}
 .pagination .page-link {
   color: var(--cor-primaria);
   border-color: rgba(0, 0, 0, 0.1);
+  min-width: 2.25rem;
+  padding-left: 0.65rem;
+  padding-right: 0.65rem;
+  text-align: center;
 }
 .pagination .page-link:hover {
   color: var(--cor-fundo);
@@ -88,6 +95,25 @@
   background-color: #f7f8fa;
 }
 
+#form-hq-modal .form-check-input:checked {
+  background-color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+}
+#form-hq-modal .form-check-input:focus {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 0.25rem rgba(33, 136, 61, 0.25);
+}
+
+#acervo-alert-container .alert-success {
+  background-color: rgba(33, 136, 61, 0.12);
+  border-color: var(--cor-primaria);
+  color: var(--cor-texto);
+}
+
+#acervo-cards .acervo-loading .spinner-border {
+  color: var(--cor-primaria);
+}
+
 #acervo-cards {
   min-height: 220px;
 }
@@ -118,6 +144,16 @@ body {
 #menu-lateral .offcanvas-title,
 #menu-lateral .nav-link {
   color: var(--cor-texto) !important;
+}
+
+#nav-lateral.nav-pills .nav-link.active,
+#menu-lateral #nav-lateral .nav-link.active {
+  background-color: var(--cor-primaria) !important;
+  color: var(--cor-fundo) !important;
+}
+#menu-lateral .nav-link:hover,
+#menu-lateral .nav-link:focus {
+  color: var(--cor-primaria) !important;
 }
 
 #menu-lateral .btn-close {
@@ -171,17 +207,47 @@ body {
 .cartao-hq {
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+}
+.cartao-hq .card-img-top.cartao-hq__img {
+  height: 160px;
+  min-height: 160px;
+  max-height: 160px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 .cartao-hq .card-body {
   padding: 0.5rem 0.65rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 .cartao-hq__titulo {
   font-size: 0.9rem;
   font-weight: 600;
   margin-bottom: 0.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .cartao-hq__texto {
   font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ultimas-ver-mais-link {
+  color: var(--cor-primaria) !important;
+}
+.ultimas-ver-mais-link:hover {
+  color: var(--cor-primaria) !important;
+  opacity: 0.85;
 }
 
 .lista-ultimas li,
@@ -366,6 +432,18 @@ body {
   font-size: 0.85rem;
   margin-bottom: 0;
   opacity: 0.95;
+}
+
+/* Mobile: botão Adicionar um pouco menor (com espaçamento vertical) */
+@media (max-width: 767px) {
+  .acervo-btn-adicionar-col {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .acervo-btn-adicionar {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.95rem;
+  }
 }
 
 /* Mobile: garantir que o card Destaques mostre o carousel e tenha margem */
