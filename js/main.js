@@ -46,81 +46,17 @@ const db = {
   }
 };
 
-// Dados iniciais (seed). Ordem de inclusão: primeiros 5, depois id 6–9 = Wonder Woman, Amazing Fantasy, Captain America, Spider-Man #316.
+// Dados iniciais (seed). preco em reais (float). Ordem: primeiros 5, depois id 6–9 = Wonder Woman, Amazing Fantasy, Captain America, Spider-Man #316.
 const hqsIniciais = [
-  {
-    titulo: 'Fantastic Four #1',
-    descricao: 'Primeira aparição do Quarteto Fantástico. Reed, Sue, Ben e Johnny ganham poderes em uma missão espacial.',
-    anoPublicacao: 1961,
-    roteirista: 'Stan Lee',
-    desenhista: 'Jack Kirby',
-    imagemCaminho: 'assets/images/hqs/fantastic-four.webp'
-  },
-  {
-    titulo: 'Demolidor: O Homem Sem Medo',
-    descricao: 'Matt Murdock, o Demolidor, combate o crime em Hell\'s Kitchen com seus sentidos apurados.',
-    anoPublicacao: 1979,
-    roteirista: 'Frank Miller',
-    desenhista: 'Frank Miller',
-    imagemCaminho: 'assets/images/hqs/demolidor-o-homem-sem-medo.jpeg'
-  },
-  {
-    titulo: 'Journey Into Mystery #83',
-    descricao: 'Primeira aparição do Thor. O deus nórdico é banido para a Terra e adota a identidade do médico Donald Blake.',
-    anoPublicacao: 1962,
-    roteirista: 'Stan Lee',
-    desenhista: 'Jack Kirby',
-    imagemCaminho: 'assets/images/hqs/journey-into-mystery-83-thor.jpg'
-  },
-  {
-    titulo: 'Tales of Suspense #39',
-    descricao: 'Primeira aparição do Homem de Ferro. Tony Stark cria a armadura para escapar de seus captores.',
-    anoPublicacao: 1963,
-    roteirista: 'Stan Lee',
-    desenhista: 'Don Heck',
-    imagemCaminho: 'assets/images/hqs/tales-of-suspense-iron-man.jpeg'
-  },
-  {
-    titulo: 'Detective Comics #27',
-    descricao: 'Primeira aparição do Batman. Bruce Wayne estreia como o Cavaleiro das Trevas em Gotham City.',
-    anoPublicacao: 1939,
-    roteirista: 'Bill Finger',
-    desenhista: 'Bob Kane',
-    imagemCaminho: 'assets/images/hqs/detective-comic-27.webp'
-  },
-  // Ordem ao preencher: id 6, 7, 8, 9
-  {
-    titulo: 'Sensation Comics / Wonder Woman',
-    descricao: 'Primeira aparição da Mulher-Maravilha. Diana de Themyscira entra no mundo dos homens.',
-    anoPublicacao: 1941,
-    roteirista: 'William Moulton Marston',
-    desenhista: 'H.G. Peter',
-    imagemCaminho: 'assets/images/hqs/sensation_comics_wonder_woman.jpg'
-  },
-  {
-    titulo: 'Amazing Fantasy #15',
-    descricao: 'Primeira aparição do Homem-Aranha. Peter Parker ganha seus poderes após a picada de uma aranha radioativa.',
-    anoPublicacao: 1962,
-    roteirista: 'Stan Lee',
-    desenhista: 'Steve Ditko',
-    imagemCaminho: 'assets/images/hqs/amazing-fantasy-15.jpg'
-  },
-  {
-    titulo: 'Captain America #1',
-    descricao: 'Primeira aparição do Capitão América. Steve Rogers enfrenta os nazistas na Segunda Guerra Mundial.',
-    anoPublicacao: 1941,
-    roteirista: 'Joe Simon',
-    desenhista: 'Jack Kirby',
-    imagemCaminho: 'assets/images/hqs/captain-america-1-1941.jpeg'
-  },
-  {
-    titulo: 'The Amazing Spider-Man #316',
-    descricao: 'O Nascimento de Venom. Eddie Brock e o simbionte se unem para enfrentar o Homem-Aranha.',
-    anoPublicacao: 1988,
-    roteirista: 'David Michelinie',
-    desenhista: 'Todd McFarlane',
-    imagemCaminho: 'assets/images/hqs/the-amazing-spiderman-316-o-nascimento-de-venom-1988.webp'
-  }
+  { titulo: 'Fantastic Four #1', descricao: 'Primeira aparição do Quarteto Fantástico. Reed, Sue, Ben e Johnny ganham poderes em uma missão espacial.', anoPublicacao: 1961, roteirista: 'Stan Lee', desenhista: 'Jack Kirby', imagemCaminho: 'assets/images/hqs/fantastic-four.webp', preco: 24.90 },
+  { titulo: 'Demolidor: O Homem Sem Medo', descricao: 'Matt Murdock, o Demolidor, combate o crime em Hell\'s Kitchen com seus sentidos apurados.', anoPublicacao: 1979, roteirista: 'Frank Miller', desenhista: 'Frank Miller', imagemCaminho: 'assets/images/hqs/demolidor-o-homem-sem-medo.jpeg', preco: 19.90 },
+  { titulo: 'Journey Into Mystery #83', descricao: 'Primeira aparição do Thor. O deus nórdico é banido para a Terra e adota a identidade do médico Donald Blake.', anoPublicacao: 1962, roteirista: 'Stan Lee', desenhista: 'Jack Kirby', imagemCaminho: 'assets/images/hqs/journey-into-mystery-83-thor.jpg', preco: 22.90 },
+  { titulo: 'Tales of Suspense #39', descricao: 'Primeira aparição do Homem de Ferro. Tony Stark cria a armadura para escapar de seus captores.', anoPublicacao: 1963, roteirista: 'Stan Lee', desenhista: 'Don Heck', imagemCaminho: 'assets/images/hqs/tales-of-suspense-iron-man.jpeg', preco: 21.90 },
+  { titulo: 'Detective Comics #27', descricao: 'Primeira aparição do Batman. Bruce Wayne estreia como o Cavaleiro das Trevas em Gotham City.', anoPublicacao: 1939, roteirista: 'Bill Finger', desenhista: 'Bob Kane', imagemCaminho: 'assets/images/hqs/detective-comic-27.webp', preco: 89.90 },
+  { titulo: 'Sensation Comics / Wonder Woman', descricao: 'Primeira aparição da Mulher-Maravilha. Diana de Themyscira entra no mundo dos homens.', anoPublicacao: 1941, roteirista: 'William Moulton Marston', desenhista: 'H.G. Peter', imagemCaminho: 'assets/images/hqs/sensation_comics_wonder_woman.jpg', preco: 79.90 },
+  { titulo: 'Amazing Fantasy #15', descricao: 'Primeira aparição do Homem-Aranha. Peter Parker ganha seus poderes após a picada de uma aranha radioativa.', anoPublicacao: 1962, roteirista: 'Stan Lee', desenhista: 'Steve Ditko', imagemCaminho: 'assets/images/hqs/amazing-fantasy-15.jpg', preco: 129.90 },
+  { titulo: 'Captain America #1', descricao: 'Primeira aparição do Capitão América. Steve Rogers enfrenta os nazistas na Segunda Guerra Mundial.', anoPublicacao: 1941, roteirista: 'Joe Simon', desenhista: 'Jack Kirby', imagemCaminho: 'assets/images/hqs/captain-america-1-1941.jpeg', preco: 94.90 },
+  { titulo: 'The Amazing Spider-Man #316', descricao: 'O Nascimento de Venom. Eddie Brock e o simbionte se unem para enfrentar o Homem-Aranha.', anoPublicacao: 1988, roteirista: 'David Michelinie', desenhista: 'Todd McFarlane', imagemCaminho: 'assets/images/hqs/the-amazing-spiderman-316-o-nascimento-de-venom-1988.webp', preco: 34.90 }
 ];
 
 // ========== UTILITÁRIOS: IMAGENS E INICIALIZAÇÃO DO BANCO ==========
@@ -160,7 +96,8 @@ async function initHqsIniciais() {
       anoPublicacao: hq.anoPublicacao,
       roteirista: hq.roteirista || '',
       desenhista: hq.desenhista || '',
-      imagem
+      imagem,
+      preco: typeof hq.preco === 'number' ? hq.preco : null
     });
   }
 }
@@ -262,42 +199,82 @@ function escapeHtml(texto) {
   return div.innerHTML;
 }
 
+/** Formata número como moeda BR: R$ 1.234,56 (sempre com centavos). Valor é float em reais. */
+function formatarMoedaBR(valor) {
+  if (valor == null || isNaN(parseFloat(valor))) return 'R$ 0,00';
+  var n = Math.max(0, parseFloat(valor));
+  var intPart = Math.floor(n);
+  var centavos = Math.round((n - intPart) * 100);
+  if (centavos >= 100) { intPart += 1; centavos = 0; }
+  var strInt = String(intPart).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return 'R$ ' + strInt + ',' + (centavos < 10 ? '0' : '') + centavos;
+}
+
+/** Converte string do input (apenas dígitos = centavos) em float reais. Ex.: "1000" → 10.00 */
+function parsePrecoDeCentavos(str) {
+  var digits = String(str).replace(/\D/g, '');
+  if (digits === '') return null;
+  var centavos = parseInt(digits, 10);
+  if (isNaN(centavos)) return null;
+  return centavos / 100;
+}
+
+/** Dado valor em reais (float), retorna string só com dígitos (centavos). Ex.: 10.5 → "1050" */
+function precoParaCentavosStr(valor) {
+  if (valor == null || isNaN(parseFloat(valor))) return '';
+  var centavos = Math.round(parseFloat(valor) * 100);
+  return String(Math.max(0, centavos));
+}
+
 // ========== ACERVO: FILTROS, BUSCA INTELIGENTE, GRADE E PAGINAÇÃO ==========
 
-var ACERVO_POR_PAGINA = 6;
-var ACERVO_ANO_FALLBACK = 1930;
+var ACERVO_POR_PAGINA = 4;
 var acervoEstado = {
   paginaAtual: 1,
-  filtros: { busca: '', roteirista: '', desenhista: '', anoMin: ACERVO_ANO_FALLBACK }
+  filtros: { busca: '', roteirista: '', desenhista: '', precoMin: null, precoMax: null }
 };
 
-function getAnoMinAcervo() {
+/** Menor preço do acervo (em centavos para o range). */
+function getPrecoMinAcervoCents() {
   var hqs = db.getAllHqs();
-  var anos = hqs.map(function (hq) { return hq.anoPublicacao; }).filter(function (a) { return a != null && !isNaN(parseInt(a, 10)); });
-  if (anos.length === 0) return ACERVO_ANO_FALLBACK;
-  return Math.min.apply(null, anos);
+  var precos = hqs.map(function (hq) { return hq.preco; }).filter(function (p) { return p != null && !isNaN(parseFloat(p)) && p >= 0; });
+  if (precos.length === 0) return 0;
+  return Math.floor(Math.min.apply(null, precos) * 100);
 }
 
-function getAnoMaxAcervo() {
-  return new Date().getFullYear();
+/** Maior preço do acervo (em centavos para o range). */
+function getPrecoMaxAcervoCents() {
+  var hqs = db.getAllHqs();
+  var precos = hqs.map(function (hq) { return hq.preco; }).filter(function (p) { return p != null && !isNaN(parseFloat(p)) && p >= 0; });
+  if (precos.length === 0) return 10000; // R$ 100,00
+  return Math.ceil(Math.max.apply(null, precos) * 100);
 }
 
-function syncRangeAnoBounds() {
-  var anoEl = document.getElementById('acervo-ano');
-  var anoValorSpan = document.getElementById('acervo-ano-valor');
-  if (!anoEl) return;
-  var anoMin = getAnoMinAcervo();
-  var anoMax = getAnoMaxAcervo();
-  anoEl.setAttribute('min', anoMin);
-  anoEl.setAttribute('max', anoMax);
-  var val = parseInt(anoEl.value, 10);
-  if (!isNaN(val)) {
-    if (val < anoMin) anoEl.value = anoMin;
-    else if (val > anoMax) anoEl.value = anoMax;
-  } else {
-    anoEl.value = anoMin;
-  }
-  if (anoValorSpan) anoValorSpan.textContent = anoEl.value;
+function syncRangePrecoBounds() {
+  var rangeMin = document.getElementById('acervo-preco-min');
+  var rangeMax = document.getElementById('acervo-preco-max');
+  var spanMin = document.getElementById('acervo-preco-min-valor');
+  var spanMax = document.getElementById('acervo-preco-max-valor');
+  if (!rangeMin || !rangeMax) return;
+  var minC = getPrecoMinAcervoCents();
+  var maxC = getPrecoMaxAcervoCents();
+  var maxSafe = Math.max(maxC, minC + 100);
+  rangeMin.setAttribute('min', minC);
+  rangeMin.setAttribute('max', maxSafe);
+  rangeMax.setAttribute('min', minC);
+  rangeMax.setAttribute('max', maxSafe);
+  var valMin = parseInt(rangeMin.value, 10);
+  var valMax = parseInt(rangeMax.value, 10);
+  if (isNaN(valMin)) valMin = minC;
+  /* default máx. = maior preço do acervo (navegador costuma iniciar range sem value no mínimo) */
+  if (isNaN(valMax) || valMax <= minC) valMax = maxC;
+  valMin = Math.max(minC, Math.min(valMin, maxSafe));
+  valMax = Math.max(minC, Math.min(valMax, maxSafe));
+  if (valMin > valMax) valMax = valMin;
+  rangeMin.value = valMin;
+  rangeMax.value = valMax;
+  if (spanMin) spanMin.textContent = formatarMoedaBR(valMin / 100);
+  if (spanMax) spanMax.textContent = formatarMoedaBR(valMax / 100);
 }
 
 var modalHqIdAtual = null;
@@ -333,7 +310,7 @@ function getOpcoesDesenhistas() {
 /** Campos de texto da HQ em que a busca inteligente procura (todos os campos textuais do banco). */
 var CAMPOS_BUSCA_HQ = ['titulo', 'descricao', 'roteirista', 'desenhista'];
 
-/** Aplica filtros (busca em todos os campos de texto, roteirista, desenhista, ano mín.) e retorna a lista filtrada. */
+/** Aplica filtros (busca, roteirista, desenhista, preço mín. e máx.) e retorna a lista filtrada. */
 function filtrarHqs(filtros) {
   var lista = db.getAllHqs();
 
@@ -355,9 +332,13 @@ function filtrarHqs(filtros) {
     lista = lista.filter(function (hq) { return (hq.desenhista || '').trim() === filtros.desenhista; });
   }
 
-  var anoMin = parseInt(filtros.anoMin, 10);
-  if (!isNaN(anoMin)) {
-    lista = lista.filter(function (hq) { return (hq.anoPublicacao || 0) >= anoMin; });
+  var precoMin = filtros.precoMin != null ? parseFloat(filtros.precoMin, 10) : NaN;
+  var precoMax = filtros.precoMax != null ? parseFloat(filtros.precoMax, 10) : NaN;
+  if (!isNaN(precoMin)) {
+    lista = lista.filter(function (hq) { return (hq.preco != null ? parseFloat(hq.preco, 10) : 0) >= precoMin; });
+  }
+  if (!isNaN(precoMax)) {
+    lista = lista.filter(function (hq) { return (hq.preco != null ? parseFloat(hq.preco, 10) : 0) <= precoMax; });
   }
 
   return lista;
@@ -444,9 +425,11 @@ function renderizarCardsAcervo(hqs) {
     var body = document.createElement('div');
     body.className = 'card-body d-flex flex-column';
     var roteiristaDesenhista = [hq.roteirista, hq.desenhista].filter(Boolean).join(' • ') || '—';
+    var precoStr = (hq.preco != null && !isNaN(parseFloat(hq.preco))) ? formatarMoedaBR(hq.preco) : '—';
     body.innerHTML =
       '<h6 class="card-title cartao-hq__titulo">' + escapeHtml(hq.titulo) + '</h6>' +
       '<p class="card-text text-muted cartao-hq__texto mb-1">' + escapeHtml(hq.anoPublicacao) + '</p>' +
+      '<p class="card-text text-muted cartao-hq__texto mb-1">' + escapeHtml(precoStr) + '</p>' +
       '<p class="card-text text-muted cartao-hq__texto mb-2">' + escapeHtml(roteiristaDesenhista) + '</p>' +
       '<div class="mt-auto text-end">' +
       '<button class="btn btn-outline-primary btn-sm btn-detalhes-hq" type="button" data-hq-id="' + hq.id + '">Detalhes</button>' +
@@ -456,14 +439,15 @@ function renderizarCardsAcervo(hqs) {
     col.appendChild(card);
     container.appendChild(col);
 
-    /* Popover ao passar o mouse no card: título + descrição da HQ */
+    /* Popover: hover no desktop; click no mobile (tooltip some ao clicar fora) */
     if (window.bootstrap && window.bootstrap.Popover) {
       var descricao = (hq.descricao || '').trim();
       if (descricao.length > 200) descricao = descricao.substring(0, 200) + '…';
       var conteudoPopover = descricao ? escapeHtml(descricao) : 'Sem descrição.';
       conteudoPopover += '<br><small class="text-muted">Clique em Detalhes para ver ou editar.</small>';
+      var triggerMobile = window.matchMedia && window.matchMedia('(max-width: 991px)').matches;
       new bootstrap.Popover(card, {
-        trigger: 'hover',
+        trigger: triggerMobile ? 'click' : 'hover',
         title: escapeHtml(hq.titulo),
         content: conteudoPopover,
         html: true,
@@ -523,7 +507,7 @@ function mostrarLoadingAcervo() {
 function atualizarAcervo() {
   mostrarLoadingAcervo();
   setTimeout(function () {
-    syncRangeAnoBounds();
+    syncRangePrecoBounds();
     var lista = filtrarHqs(acervoEstado.filtros);
     var resultado = paginar(lista, acervoEstado.paginaAtual, ACERVO_POR_PAGINA);
 
@@ -541,12 +525,14 @@ function atualizarAcervo() {
 /** Inicializa estado dos filtros e primeira renderização do acervo. */
 function initAcervo() {
   renderizarFiltrosAcervo();
-  syncRangeAnoBounds();
-  var anoEl = document.getElementById('acervo-ano');
+  syncRangePrecoBounds();
+  var precoMinEl = document.getElementById('acervo-preco-min');
+  var precoMaxEl = document.getElementById('acervo-preco-max');
   acervoEstado.filtros.busca = (document.getElementById('acervo-busca') && document.getElementById('acervo-busca').value) || '';
   acervoEstado.filtros.roteirista = (document.getElementById('acervo-roteirista') && document.getElementById('acervo-roteirista').value) || '';
   acervoEstado.filtros.desenhista = (document.getElementById('acervo-desenhista') && document.getElementById('acervo-desenhista').value) || '';
-  acervoEstado.filtros.anoMin = (anoEl && !isNaN(parseInt(anoEl.value, 10))) ? parseInt(anoEl.value, 10) : getAnoMinAcervo();
+  acervoEstado.filtros.precoMin = (precoMinEl && !isNaN(parseInt(precoMinEl.value, 10))) ? (parseInt(precoMinEl.value, 10) / 100) : null;
+  acervoEstado.filtros.precoMax = (precoMaxEl && !isNaN(parseInt(precoMaxEl.value, 10))) ? (parseInt(precoMaxEl.value, 10) / 100) : null;
   acervoEstado.paginaAtual = 1;
   atualizarAcervo();
 }
@@ -556,38 +542,68 @@ function bindAcervoEventos() {
   var busca = document.getElementById('acervo-busca');
   var selR = document.getElementById('acervo-roteirista');
   var selD = document.getElementById('acervo-desenhista');
-  var anoRange = document.getElementById('acervo-ano');
-  var anoValor = document.getElementById('acervo-ano-valor');
+
+  function atualizarPrecoSpans() {
+    var rMin = document.getElementById('acervo-preco-min');
+    var rMax = document.getElementById('acervo-preco-max');
+    var sMin = document.getElementById('acervo-preco-min-valor');
+    var sMax = document.getElementById('acervo-preco-max-valor');
+    if (sMin && rMin) sMin.textContent = formatarMoedaBR(parseInt(rMin.value, 10) / 100);
+    if (sMax && rMax) sMax.textContent = formatarMoedaBR(parseInt(rMax.value, 10) / 100);
+  }
 
   function aplicarFiltros() {
     acervoEstado.filtros.busca = (busca && busca.value) ? busca.value.trim() : '';
     acervoEstado.filtros.roteirista = (selR && selR.value) || '';
     acervoEstado.filtros.desenhista = (selD && selD.value) || '';
-    acervoEstado.filtros.anoMin = (anoRange && !isNaN(parseInt(anoRange.value, 10))) ? parseInt(anoRange.value, 10) : getAnoMinAcervo();
+    var rMin = document.getElementById('acervo-preco-min');
+    var rMax = document.getElementById('acervo-preco-max');
+    acervoEstado.filtros.precoMin = (rMin && !isNaN(parseInt(rMin.value, 10))) ? (parseInt(rMin.value, 10) / 100) : null;
+    acervoEstado.filtros.precoMax = (rMax && !isNaN(parseInt(rMax.value, 10))) ? (parseInt(rMax.value, 10) / 100) : null;
     acervoEstado.paginaAtual = 1;
-    if (anoValor && anoRange) anoValor.textContent = anoRange.value;
+    atualizarPrecoSpans();
     atualizarAcervo();
   }
 
   if (busca) busca.addEventListener('input', aplicarFiltros);
   if (selR) selR.addEventListener('change', aplicarFiltros);
   if (selD) selD.addEventListener('change', aplicarFiltros);
-  if (anoRange) {
-    var timeoutAnoRange;
-    function aplicarFiltrosAnoDebounced() {
-      if (anoValor && anoRange) anoValor.textContent = anoRange.value;
-      aplicarFiltros();
+  var precoMinEl = document.getElementById('acervo-preco-min');
+  var precoMaxEl = document.getElementById('acervo-preco-max');
+  var timeoutPreco;
+  function aplicarFiltrosPrecoDebounced() {
+    var rMin = document.getElementById('acervo-preco-min');
+    var rMax = document.getElementById('acervo-preco-max');
+    if (rMin && rMax) {
+      var vMin = parseInt(rMin.value, 10);
+      var vMax = parseInt(rMax.value, 10);
+      if (!isNaN(vMin) && !isNaN(vMax) && vMin > vMax) {
+        rMax.value = vMin;
+        if (document.getElementById('acervo-preco-max-valor')) document.getElementById('acervo-preco-max-valor').textContent = formatarMoedaBR(vMin / 100);
+      }
     }
-    anoRange.addEventListener('input', function () {
-      if (anoValor && anoRange) anoValor.textContent = anoRange.value;
-      clearTimeout(timeoutAnoRange);
-      timeoutAnoRange = setTimeout(aplicarFiltrosAnoDebounced, 300);
-    });
-    anoRange.addEventListener('change', function () {
-      if (anoValor && anoRange) anoValor.textContent = anoRange.value;
-      clearTimeout(timeoutAnoRange);
-      timeoutAnoRange = setTimeout(aplicarFiltrosAnoDebounced, 300);
-    });
+    atualizarPrecoSpans();
+    aplicarFiltros();
+  }
+  function onPrecoRangeInput() {
+    var rMin = document.getElementById('acervo-preco-min');
+    var rMax = document.getElementById('acervo-preco-max');
+    if (rMin && rMax) {
+      var vMin = parseInt(rMin.value, 10);
+      var vMax = parseInt(rMax.value, 10);
+      if (!isNaN(vMin) && !isNaN(vMax) && vMin > vMax) rMax.value = vMin;
+    }
+    atualizarPrecoSpans();
+    clearTimeout(timeoutPreco);
+    timeoutPreco = setTimeout(aplicarFiltrosPrecoDebounced, 300);
+  }
+  if (precoMinEl) {
+    precoMinEl.addEventListener('input', onPrecoRangeInput);
+    precoMinEl.addEventListener('change', onPrecoRangeInput);
+  }
+  if (precoMaxEl) {
+    precoMaxEl.addEventListener('input', onPrecoRangeInput);
+    precoMaxEl.addEventListener('change', onPrecoRangeInput);
   }
 
   var containerCards = document.getElementById('acervo-cards');
@@ -597,6 +613,22 @@ function bindAcervoEventos() {
       if (!btn) return;
       var id = btn.getAttribute('data-hq-id');
       if (id) abrirModalDetalhes(id);
+    });
+  }
+
+  /* Mobile: ao clicar fora do card e do popover, fecha o tooltip de informações */
+  if (window.bootstrap && window.bootstrap.Popover) {
+    document.addEventListener('click', function fecharPopoverForaCard(e) {
+      var container = document.getElementById('acervo-cards');
+      if (!container) return;
+      var target = e.target;
+      var dentroCard = target.closest && target.closest('.cartao-hq');
+      var dentroPopover = target.closest && target.closest('.popover');
+      if (dentroCard || dentroPopover) return;
+      container.querySelectorAll('.cartao-hq').forEach(function (card) {
+        var inst = bootstrap.Popover.getInstance(card);
+        if (inst) inst.hide();
+      });
     });
   }
 }
@@ -611,6 +643,7 @@ function getFormModalCampos() {
     ano: document.getElementById('modal-hq-ano'),
     roteirista: document.getElementById('modal-hq-roteirista'),
     desenhista: document.getElementById('modal-hq-desenhista'),
+    preco: document.getElementById('modal-hq-preco'),
     imagem: document.getElementById('modal-hq-imagem'),
     imagemFile: document.getElementById('modal-hq-imagem-file'),
     digital: document.getElementById('modal-hq-digital')
@@ -624,9 +657,13 @@ function preencherFormModal(hq) {
   if (!hq) {
     if (c.titulo) c.titulo.value = '';
     if (c.descricao) c.descricao.value = '';
-    if (c.ano) c.ano.value = '';
+    if (c.ano) c.ano.value = ''; // apenas dígitos, máx. 4 (preenchido pela máscara)
     if (c.roteirista) c.roteirista.value = '';
     if (c.desenhista) c.desenhista.value = '';
+    if (c.preco) {
+      c.preco.value = 'R$ 0,00';
+      c.preco.setAttribute('data-cents', '');
+    }
     if (c.imagem) {
       c.imagem.src = semCapa;
       c.imagem.alt = 'Sem capa';
@@ -637,9 +674,14 @@ function preencherFormModal(hq) {
   }
   if (c.titulo) c.titulo.value = hq.titulo || '';
   if (c.descricao) c.descricao.value = hq.descricao || '';
-  if (c.ano) c.ano.value = hq.anoPublicacao || '';
+  if (c.ano) c.ano.value = hq.anoPublicacao != null && hq.anoPublicacao !== '' ? String(hq.anoPublicacao).replace(/\D/g, '').slice(0, 4) : '';
   if (c.roteirista) c.roteirista.value = hq.roteirista || '';
   if (c.desenhista) c.desenhista.value = hq.desenhista || '';
+  if (c.preco) {
+    var cents = precoParaCentavosStr(hq.preco);
+    c.preco.setAttribute('data-cents', cents);
+    c.preco.value = formatarMoedaBR(cents ? parseInt(cents, 10) / 100 : null);
+  }
   if (c.imagem) {
     c.imagem.src = hq.imagem || semCapa;
     c.imagem.alt = escapeHtml(hq.titulo || '');
@@ -651,7 +693,7 @@ function preencherFormModal(hq) {
 function setModalModoLeitura(leitura) {
   var c = getFormModalCampos();
   var readonly = !!leitura;
-  [c.titulo, c.descricao, c.ano, c.roteirista, c.desenhista].forEach(function (el) {
+  [c.titulo, c.descricao, c.ano, c.roteirista, c.desenhista, c.preco].forEach(function (el) {
     if (el) el.readOnly = readonly;
   });
   if (c.digital) c.digital.disabled = readonly;
@@ -698,20 +740,26 @@ function abrirModalAdicionar() {
 /** Lê os valores atuais do formulário do modal e retorna objeto para salvar no banco. */
 function obterDadosFormModal() {
   var c = getFormModalCampos();
+  var precoVal = null;
+  if (c.preco) {
+    var cents = (c.preco.getAttribute && c.preco.getAttribute('data-cents')) || String(c.preco.value || '').replace(/\D/g, '');
+    if (cents) precoVal = parsePrecoDeCentavos(cents);
+  }
   return {
     titulo: (c.titulo && c.titulo.value) ? c.titulo.value.trim() : '',
     descricao: (c.descricao && c.descricao.value) ? c.descricao.value.trim() : '',
-    anoPublicacao: (c.ano && c.ano.value) ? parseInt(c.ano.value, 10) : null,
+    anoPublicacao: (c.ano && c.ano.value && String(c.ano.value).replace(/\D/g, '').length === 4) ? parseInt(String(c.ano.value).replace(/\D/g, ''), 10) : null,
     roteirista: (c.roteirista && c.roteirista.value) ? c.roteirista.value.trim() : '',
-    desenhista: (c.desenhista && c.desenhista.value) ? c.desenhista.value.trim() : ''
+    desenhista: (c.desenhista && c.desenhista.value) ? c.desenhista.value.trim() : '',
+    preco: precoVal
   };
 }
 
-/** Valida campos obrigatórios do modal; retorna true se válido e remove/adiciona is-invalid. */
+/** Valida campos obrigatórios do modal; ano, se preenchido, deve ter exatamente 4 dígitos. */
 function validarFormModal() {
   var c = getFormModalCampos();
   var valido = true;
-  [c.titulo, c.descricao, c.ano, c.roteirista, c.desenhista].forEach(function (el) {
+  [c.titulo, c.descricao, c.roteirista, c.desenhista].forEach(function (el) {
     if (!el) return;
     var preenchido = el.value != null && String(el.value).trim() !== '';
     if (!preenchido) {
@@ -721,11 +769,83 @@ function validarFormModal() {
       el.classList.remove('is-invalid');
     }
   });
+  if (c.ano) {
+    var anoStr = String(c.ano.value || '').replace(/\D/g, '');
+    var anoOk = anoStr === '' || anoStr.length === 4;
+    if (!anoOk) {
+      c.ano.classList.add('is-invalid');
+      valido = false;
+    } else {
+      c.ano.classList.remove('is-invalid');
+    }
+  }
   return valido;
+}
+
+/** Máscara do campo ano: apenas dígitos, no máximo 4 (obrigatório 4 dígitos se preenchido). */
+function bindAnoInputMask() {
+  var anoEl = document.getElementById('modal-hq-ano');
+  if (!anoEl) return;
+  var maxLen = 4;
+  anoEl.addEventListener('keydown', function (e) {
+    if (this.readOnly) return;
+    var key = e.key;
+    if (key === 'Backspace') return;
+    if (/^\d$/.test(key)) {
+      var digits = (this.value || '').replace(/\D/g, '');
+      if (digits.length >= maxLen) e.preventDefault();
+    } else if (!['Tab', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(key)) {
+      e.preventDefault();
+    }
+  });
+  anoEl.addEventListener('input', function () {
+    if (this.readOnly) return;
+    var digits = (this.value || '').replace(/\D/g, '').slice(0, maxLen);
+    this.value = digits;
+  });
+}
+
+/** Máscara do campo preço: apenas dígitos; exibe R$ X.XXX,XX em tempo real (centavos). */
+function bindPrecoInputMask() {
+  var precoEl = document.getElementById('modal-hq-preco');
+  if (!precoEl) return;
+  var maxDigitos = 8; // até 999999,99
+  precoEl.addEventListener('keydown', function (e) {
+    if (this.readOnly) return;
+    var key = e.key;
+    if (key === 'Backspace') {
+      var cents = (this.getAttribute('data-cents') || '').slice(0, -1);
+      this.setAttribute('data-cents', cents);
+      this.value = formatarMoedaBR(cents ? parseInt(cents, 10) / 100 : null);
+      e.preventDefault();
+      return;
+    }
+    if (/^\d$/.test(key)) {
+      var atuais = this.getAttribute('data-cents') || '';
+      if (atuais.length >= maxDigitos) {
+        e.preventDefault();
+        return;
+      }
+      var novo = atuais + key;
+      this.setAttribute('data-cents', novo);
+      this.value = formatarMoedaBR(parseInt(novo, 10) / 100);
+      e.preventDefault();
+    } else if (!['Tab', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(key)) {
+      e.preventDefault();
+    }
+  });
+  precoEl.addEventListener('input', function () {
+    if (this.readOnly) return;
+    var digits = (this.value || '').replace(/\D/g, '').slice(0, maxDigitos);
+    this.setAttribute('data-cents', digits);
+    this.value = formatarMoedaBR(digits ? parseInt(digits, 10) / 100 : null);
+  });
 }
 
 /** Liga eventos do modal: capa, editar, cancelar, excluir, salvar e botões Adicionar. */
 function bindModalHqEventos() {
+  bindAnoInputMask();
+  bindPrecoInputMask();
   var btnEditar = document.getElementById('modal-hq-btn-editar');
   var btnCancelar = document.getElementById('modal-hq-btn-cancelar');
   var btnExcluir = document.getElementById('modal-hq-btn-excluir');
@@ -888,8 +1008,6 @@ function bindUltimasVerMais() {
 }
 
 // ========== INICIALIZAÇÃO ==========
-// Carrega seed (se banco vazio), atualiza painel inicial, bind de eventos e primeira renderização do acervo.
-
 if (typeof window !== 'undefined') {
   initHqsIniciais().then(function () {
     atualizaPainelInicial();

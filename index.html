@@ -59,16 +59,11 @@
 
   <main class="conteudo-principal">
 
-    <!-- Seção Início  -->
+    <!-- Seção Início -->
     <div id="inicio" class="container container-topo">
-      <div class="row mb-3">
-        <div class="col-12">
-          <h1 class="titulo-principal mb-0">Central de Quadrinhos</h1>
-        </div>
-      </div>
       <div class="row row-topo-colunas">
-        <!-- Coluna esquerda: indicadores e listas -->
-        <div class="col-12 col-lg-6 ordem-2 ordem-lg-1 coluna-esquerda">
+        <!-- Coluna dos cards de indicadores (à direita no desktop) -->
+        <div class="col-12 col-lg-6 order-2 order-lg-2 coluna-esquerda">
           <!-- Card últimas HQs: 3 visíveis + Ver mais (collapse com mais 3, total 6) -->
           <div class="card cartao-bloco mb-3">
             <div class="card-body">
@@ -103,52 +98,31 @@
           </div>
         </div>
 
-        <!-- Coluna direita: card Destaques e carrossel carousel-destaques -->
-        <div class="col-12 col-lg-6 ordem-1 ordem-lg-2 coluna-carrossel">
-          <div class="card card-destaques h-100">
-            <div class="card-header">
-              <h5 class="card-title mb-0">Destaques</h5>
-            </div>
-            <div class="card-body p-0 d-flex flex-column">
-              <p class="subtitulo-destaques mb-0 px-3 pt-2">Revistas em quadrinhos de maior relevância.</p>
-              <div class="carrossel-topo">
-                <div id="carousel-destaques" class="carousel slide carrossel-com-borda" data-bs-ride="carousel" data-bs-interval="5000">
-                  <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carousel-destaques" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carousel-destaques" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carousel-destaques" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <!-- Coluna do carrossel (à esquerda no desktop, antes dos cards) -->
+        <div class="col-12 col-lg-6 order-1 order-lg-1 coluna-carrossel">
+          <div class="carrossel-topo">
+            <div id="carousel-destaques" class="carousel slide carrossel-com-borda" data-bs-ride="carousel" data-bs-interval="3000" data-bs-wrap="true" data-bs-pause="false">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="assets/images/banners/thumb-amazing-fantasy-1.jpg" class="d-block w-100 img-carrossel" alt="Amazing Fantasy">
+                  <div class="carousel-caption caption-destaques">
+                    <h5>Amazing Fantasy #15</h5>
+                    <p>Primeira aparição do Homem-Aranha (1962). Peter Parker ganha seus poderes após a picada de uma aranha radioativa.</p>
                   </div>
-                  <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <img src="assets/images/banners/thumb-amazing-fantasy-1.jpg" class="d-block w-100 img-carrossel" alt="Amazing Fantasy">
-                      <div class="carousel-caption caption-destaques">
-                        <h5>Amazing Fantasy #15</h5>
-                        <p>Primeira aparição do Homem-Aranha (1962). Peter Parker ganha seus poderes após a picada de uma aranha radioativa.</p>
-                      </div>
-                    </div>
-                    <div class="carousel-item">
-                      <img src="assets/images/banners/thumb-fantastic-four.jpg" class="d-block w-100 img-carrossel" alt="Quarteto Fantástico">
-                      <div class="carousel-caption caption-destaques">
-                        <h5>Fantastic Four #1</h5>
-                        <p>Primeira aparição do Quarteto Fantástico (1961). Reed, Sue, Ben e Johnny ganham poderes em uma missão espacial.</p>
-                      </div>
-                    </div>
-                    <div class="carousel-item">
-                      <img src="assets/images/banners/thumb-1920-1369529.jpeg" class="d-block w-100 img-carrossel" alt="Destaque quadrinhos">
-                      <div class="carousel-caption caption-destaques">
-                        <h5>Clássicos em destaque</h5>
-                        <p>Os quadrinhos que marcaram gerações e definiram a cultura dos super-heróis.</p>
-                      </div>
-                    </div>
+                </div>
+                <div class="carousel-item">
+                  <img src="assets/images/banners/thumb-fantastic-four.jpg" class="d-block w-100 img-carrossel" alt="Quarteto Fantástico">
+                  <div class="carousel-caption caption-destaques">
+                    <h5>Fantastic Four #1</h5>
+                    <p>Primeira aparição do Quarteto Fantástico (1961). Reed, Sue, Ben e Johnny ganham poderes em uma missão espacial.</p>
                   </div>
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-destaques" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                  </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carousel-destaques" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Próximo</span>
-                  </button>
+                </div>
+                <div class="carousel-item">
+                  <img src="assets/images/banners/thumb-1920-1369529.jpeg" class="d-block w-100 img-carrossel" alt="Destaque quadrinhos">
+                  <div class="carousel-caption caption-destaques">
+                    <h5>Clássicos em destaque</h5>
+                    <p>Os quadrinhos que marcaram gerações e definiram a cultura dos super-heróis.</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -198,9 +172,17 @@
                   <label for="acervo-desenhista">Desenhista</label>
                 </div>
               </div>
-              <div class="col-12 col-md-2">
-                <label for="acervo-ano" class="form-label">Ano (mín.) <span id="acervo-ano-valor" class="text-muted">—</span></label>
-                <input type="range" class="form-range" id="acervo-ano" aria-label="Ano mínimo de publicação">
+              <div class="col-6 col-md-2 acervo-filtro-preco-col">
+                <div class="acervo-filtro-preco-wrap">
+                  <span class="acervo-filtro-preco-linha"><span class="acervo-filtro-preco-rotulo">Mín.</span> <span id="acervo-preco-min-valor" class="acervo-filtro-preco-valor text-muted">R$ —</span></span>
+                  <input type="range" class="form-range" id="acervo-preco-min" aria-label="Preço mínimo em reais">
+                </div>
+              </div>
+              <div class="col-6 col-md-2 acervo-filtro-preco-col">
+                <div class="acervo-filtro-preco-wrap">
+                  <span class="acervo-filtro-preco-linha"><span class="acervo-filtro-preco-rotulo">Máx.</span> <span id="acervo-preco-max-valor" class="acervo-filtro-preco-valor text-muted">R$ —</span></span>
+                  <input type="range" class="form-range" id="acervo-preco-max" aria-label="Preço máximo em reais">
+                </div>
               </div>
               <div class="col-12 col-md-auto ms-md-auto text-end d-none d-md-block acervo-btn-adicionar-col">
                 <button type="button" class="btn btn-primary btn-lg acervo-btn-adicionar" id="acervo-btn-adicionar">Adicionar novo</button>
@@ -252,7 +234,7 @@
                 </div>
               </div>
             </div>
-            <!-- Linha roteirista (modal-hq-roteirista), desenhista (modal-hq-desenhista), ano (modal-hq-ano) -->
+            <!-- Linha roteirista, desenhista, ano, preço -->
             <div class="row g-2 mb-3">
               <div class="col">
                 <label class="form-label">Roteirista</label>
@@ -264,7 +246,11 @@
               </div>
               <div class="col">
                 <label class="form-label">Ano</label>
-                <input type="number" class="form-control" id="modal-hq-ano" readonly>
+                <input type="text" class="form-control" id="modal-hq-ano" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="Ex.: 1988" readonly>
+              </div>
+              <div class="col">
+                <label class="form-label">Preço</label>
+                <input type="text" class="form-control" id="modal-hq-preco" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="R$ 0,00" readonly>
               </div>
             </div>
             <div class="mb-3 text-end">

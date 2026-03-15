@@ -117,6 +117,28 @@
   box-shadow: none;
 }
 
+/* Filtros de preço (range): mesma altura dos demais filtros (form-floating) para alinhamento */
+.acervo-filtro-preco-wrap {
+  min-height: calc(3.5rem + 2px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.acervo-filtro-preco-wrap .acervo-filtro-preco-linha {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+}
+.acervo-filtro-preco-wrap .acervo-filtro-preco-rotulo {
+  font-weight: 500;
+}
+.acervo-filtro-preco-wrap .acervo-filtro-preco-valor {
+  margin-left: 0.15rem;
+}
+.acervo-filtro-preco-wrap .form-range {
+  margin-bottom: 0;
+}
+
 #acervo-alert-container .alert-success {
   background-color: rgba(33, 136, 61, 0.12);
   border-color: var(--cor-primaria);
@@ -221,12 +243,6 @@ body {
 .container-topo {
   padding-top: 1rem;
   padding-bottom: 1rem;
-}
-
-.titulo-principal {
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
-  font-weight: 700;
-  color: var(--cor-texto);
 }
 
 .coluna-esquerda {
@@ -340,7 +356,52 @@ body {
 
   .coluna-carrossel {
     display: flex;
+    flex-direction: column;
     align-items: stretch;
+  }
+
+  /* Carrossel ocupa a mesma altura da coluna dos cards */
+  .coluna-carrossel .carrossel-topo {
+    flex: 1;
+    min-height: 0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .coluna-carrossel .carrossel-topo .carrossel-com-borda {
+    margin: 0;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .coluna-carrossel .carrossel-topo .carousel-inner {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .coluna-carrossel .carrossel-topo .carousel-item {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    position: relative;
+  }
+
+  .coluna-carrossel .carrossel-topo .carousel-item .img-carrossel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 
   .coluna-carrossel > .card {
@@ -450,7 +511,7 @@ body {
 }
 
 .caption-destaques {
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.5) 40%, rgba(0, 0, 0, 0.15) 70%, transparent 100%);
   padding: 1.5rem 1rem 0.75rem;
   left: 0;
   right: 0;
@@ -461,12 +522,14 @@ body {
 .caption-destaques h5 {
   font-weight: 600;
   margin-bottom: 0.25rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.6);
 }
 
 .caption-destaques p {
   font-size: 0.85rem;
   margin-bottom: 0;
   opacity: 0.95;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Mobile: botão Adicionar um pouco menor (com espaçamento vertical) */
@@ -481,8 +544,13 @@ body {
   }
 }
 
-/* Mobile: garantir que o card Destaques mostre o carousel e tenha margem */
+/* Mobile: carrossel alinhado às outras seções; layout da row e do card Destaques */
 @media (max-width: 991px) {
+  .coluna-carrossel .carrossel-com-borda {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .row-topo-colunas {
     row-gap: 1.5rem;
   }
