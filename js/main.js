@@ -228,7 +228,10 @@ function precoParaCentavosStr(valor) {
 
 // ========== ACERVO: FILTROS, BUSCA INTELIGENTE, GRADE E PAGINAÇÃO ==========
 
-var ACERVO_POR_PAGINA = 4;
+/** Itens por página: 6 em tela muito larga (≥1200px), 4 em média/mobile. */
+function getAcervoPorPagina() {
+  return (typeof window !== 'undefined' && window.innerWidth >= 1200) ? 6 : 4;
+}
 var acervoEstado = {
   paginaAtual: 1,
   filtros: { busca: '', roteirista: '', desenhista: '', precoMin: null, precoMax: null }
@@ -509,7 +512,7 @@ function atualizarAcervo() {
   setTimeout(function () {
     syncRangePrecoBounds();
     var lista = filtrarHqs(acervoEstado.filtros);
-    var resultado = paginar(lista, acervoEstado.paginaAtual, ACERVO_POR_PAGINA);
+    var resultado = paginar(lista, acervoEstado.paginaAtual, getAcervoPorPagina());
 
     acervoEstado.paginaAtual = resultado.paginaAtual;
     var elContagem = document.getElementById('acervo-itens-encontrados');
@@ -1016,5 +1019,12 @@ if (typeof window !== 'undefined') {
     bindAcervoEventos();
     bindModalHqEventos();
     atualizarAcervo();
+
+    /* Ao redimensionar, atualiza itens por página (6 em tela larga, 4 em média/mobile) */
+    var resizeTimeout;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(atualizarAcervo, 150);
+    });
   });
 }
